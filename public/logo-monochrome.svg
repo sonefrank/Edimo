@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="Edimo Le Bayeur">
+  <title>Edimo Le Bayeur</title>
+
+  <!--
+    EDIMO LE BAYEUR — logo mark, version monochrome (noir seul, pour impression N&B)
+    Même géométrie que logo-mark.svg, mais un seul chemin en fill-rule="evenodd" :
+    la porte devient un "trou" transparent dans la silhouette au lieu d'un
+    remplissage gold. Reste lisible sur n'importe quel fond, aucune couleur requise.
+  -->
+
+  <path
+    fill-rule="evenodd"
+    clip-rule="evenodd"
+    fill="#1a1a1a"
+    d="M100,30 L165,85 L165,175 L35,175 L35,85 Z
+       M80,175 L80,140 A20,20 0 0 1 120,140 L120,175 Z"
+  />
+</svg>

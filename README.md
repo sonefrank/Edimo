@@ -1,36 +1,38 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Edimo Le Bayeur
 
-## Getting Started
+Plateforme de location immobilière à Douala — Next.js 16, TypeScript, Tailwind v4, shadcn/ui, Supabase.
 
-First, run the development server:
+## Démarrage
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+1. Créez un projet sur [supabase.com](https://supabase.com).
+2. Dans **Settings > API**, copiez l'URL et la clé `anon public`, puis renseignez `.env.local` :
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+   ```
+   NEXT_PUBLIC_SUPABASE_URL=...
+   NEXT_PUBLIC_SUPABASE_ANON_KEY=...
+   NEXT_PUBLIC_ADMIN_EMAIL=votre-email@exemple.com
+   ```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. Dans **SQL Editor**, exécutez le contenu de [`supabase/schema.sql`](./supabase/schema.sql) (remplacez d'abord `<VOTRE_EMAIL_ADMIN>` dans le fichier par l'email choisi ci-dessus). Ce script crée les tables `profiles`, `properties`, `messages`, `favorites`, `reviews`, leurs politiques RLS, et le trigger qui crée automatiquement un profil à l'inscription.
+4. Installez les dépendances et lancez le serveur :
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+   ```bash
+   npm install
+   npm run dev
+   ```
 
-## Learn More
+5. Ouvrez [http://localhost:3000](http://localhost:3000) — vous serez redirigé vers `/signup`.
 
-To learn more about Next.js, take a look at the following resources:
+## Structure
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- `app/(auth)` — inscription, connexion, vérification email (pas de navbar).
+- `app/(app)` — feed, détail propriété, création d'annonce, messagerie, profil, favoris (navbar + garde d'authentification).
+- `app/admin` — tableau de bord modération (réservé à `NEXT_PUBLIC_ADMIN_EMAIL`).
+- `lib/` — client Supabase, types TypeScript, helpers d'authentification.
+- `components/ui/` — primitives shadcn/ui (Button, Input, Card, Select, Tabs, ...).
+- `supabase/schema.sql` — schéma de base de données et politiques RLS à exécuter manuellement.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Notes
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Les images de propriétés sont pour l'instant des placeholders gris (pas d'upload en V1) — `property.images` reste un tableau vide à la création.
+- Les paiements ne sont pas inclus dans cette version (prévus en V2+).

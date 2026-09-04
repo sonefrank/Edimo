@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="Edimo Le Bayeur">
+  <title>Edimo Le Bayeur</title>
+
+  <!--
+    EDIMO LE BAYEUR — logo mark
+    Concept: maison géométrique (silhouette pentagone noire) + porte en arc (gold),
+    centrée, symétrique sur l'axe x=100. Deux formes pleines uniquement,
+    pas de traits fins ni de détails qui disparaissent en petite taille (16px+).
+  -->
+
+  <!-- Silhouette maison : toit triangulaire + corps rectangulaire, un seul polygone -->
+  <path
+    d="M100,30 L165,85 L165,175 L35,175 L35,85 Z"
+    fill="#1a1a1a"
+  />
+
+  <!-- Porte : rectangle à sommet arrondi (arc), centrée en bas de la maison -->
+  <path
+    d="M80,175 L80,140 A20,20 0 0 1 120,140 L120,175 Z"
+    fill="#D4AF37"
+  />
+</svg>
