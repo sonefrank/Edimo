@@ -9,6 +9,7 @@ export const translations = {
       favorites: 'Favoris',
       messages: 'Messages',
       profile: 'Profil',
+      contracts: 'Mes contrats',
     },
     common: {
       loading: 'Chargement...',
@@ -388,6 +389,7 @@ export const translations = {
       favorites: 'Favorites',
       messages: 'Messages',
       profile: 'Profile',
+      contracts: 'My contracts',
     },
     common: {
       loading: 'Loading...',

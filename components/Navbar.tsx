@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { Home, Building2, Heart, Bell, MessageCircle, User } from 'lucide-react'
+import { Home, Building2, Heart, Bell, MessageCircle, User, FileText } from 'lucide-react'
 import { useCurrentUser } from '@/components/UserProvider'
 import { useTranslation } from '@/components/LanguageProvider'
 import { LanguageToggle } from '@/components/LanguageToggle'
@@ -35,6 +35,13 @@ export function Navbar({ unreadCount = 0 }: { unreadCount?: number }) {
             <Bell className="size-5" />
           </Link>
         )}
+        <Link
+          href="/contract/list"
+          className="text-white/80 hover:text-[#D4AF37] transition"
+          title={t('nav.contracts')}
+        >
+          <FileText className="size-5" />
+        </Link>
         <Link
           href="/favorites"
           className="text-white/80 hover:text-[#D4AF37] transition"
