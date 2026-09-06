@@ -108,14 +108,19 @@ export default function MyPropertiesPage() {
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-6 sm:px-6">
-      <div className="mb-6 flex items-center justify-between">
+      <div className="mb-6 flex items-center justify-between gap-2">
         <h1 className="text-2xl font-bold text-[#1a1a1a]">{t('myProperties.title')}</h1>
-        <Button asChild>
-          <Link href="/property/create">
-            <Plus className="size-4" />
-            {t('home.publish')}
-          </Link>
-        </Button>
+        <div className="flex gap-2">
+          <Button asChild variant="outline">
+            <Link href="/contract/list">{t('contract.myContracts')}</Link>
+          </Button>
+          <Button asChild>
+            <Link href="/property/create">
+              <Plus className="size-4" />
+              {t('home.publish')}
+            </Link>
+          </Button>
+        </div>
       </div>
 
       {loading && (

@@ -79,6 +79,30 @@ export interface ReviewWithReviewer extends Review {
   reviewer: { full_name: string } | null
 }
 
+export interface ContractData {
+  propertyTitle: string
+  priceFcfa: number
+  startDate: string
+  durationMonths: number
+}
+
+export type ContractStatus = 'draft' | 'partially_signed' | 'signed_draft'
+
+export interface Contract {
+  id: string
+  property_id: string | null
+  proprietaire_id: string
+  locataire_id: string | null
+  locataire_name: string
+  locataire_email: string
+  status: ContractStatus
+  contract_data: ContractData
+  proprietaire_signature: string | null
+  locataire_signature: string | null
+  created_at: string
+  signed_at: string | null
+}
+
 export interface Conversation {
   participant_id: string
   participant_name: string

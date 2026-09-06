@@ -268,3 +268,44 @@ alter table public.properties drop constraint if exists properties_city_check;
 alter table public.properties
   add constraint properties_city_check
   check (city in ('douala', 'yaounde', 'buea', 'limbe'));
+
+-- ============ CONTRATS (e-signature DRAFT — non légale) ============
+-- locataire_id est renseigné automatiquement si l'email correspond à un compte
+-- locataire existant ; sinon reste nul (le locataire signe simplement via le lien,
+-- sans que son compte soit rattaché — cohérent avec la nature "brouillon" de la fonctionnalité).
+create table public.contracts (
+  id uuid primary key default gen_random_uuid(),
+  property_id uuid references public.properties (id) on delete set null,
+  proprietaire_id uuid not null references public.profiles (id) on delete cascade,
+  locataire_id uuid references public.profiles (id) on delete set null,
+  locataire_name text not null,
+  locataire_email text not null,
+  status text not null default 'draft' check (status in ('draft', 'partially_signed', 'signed_draft')),
+  contract_data jsonb not null,
+  proprietaire_signature text,
+  locataire_signature text,
+  created_at timestamptz not null default now(),
+  signed_at timestamptz
+);
+
+create index contracts_proprietaire_idx on public.contracts (proprietaire_id);
+create index contracts_locataire_idx on public.contracts (locataire_id);
+create index contracts_status_idx on public.contracts (status);
+
+alter table public.contracts enable row level security;
+
+create policy "Les deux parties (et l'admin) voient le contrat"
+  on public.contracts for select to authenticated
+  using (auth.uid() = proprietaire_id or auth.uid() = locataire_id or public.is_admin());
+
+create policy "Le propriétaire crée le contrat"
+  on public.contracts for insert to authenticated
+  with check (auth.uid() = proprietaire_id);
+
+create policy "Les deux parties signent (mise à jour) le contrat"
+  on public.contracts for update to authenticated
+  using (auth.uid() = proprietaire_id or auth.uid() = locataire_id or public.is_admin());
+
+create policy "Le propriétaire ou l'admin supprime le contrat"
+  on public.contracts for delete to authenticated
+  using (auth.uid() = proprietaire_id or public.is_admin());
