@@ -36,10 +36,10 @@ function VerifyContent() {
 
   return (
     <div className="flex flex-col items-center text-center">
-      <div className="mb-4 flex size-14 items-center justify-center rounded-full bg-[#D4AF37]/10">
-        <MailCheck className="size-7 text-[#D4AF37]" />
+      <div className="mb-4 flex size-14 items-center justify-center rounded-full bg-[#FFD400]/10">
+        <MailCheck className="size-7 text-[#FFD400]" />
       </div>
-      <h1 className="mb-2 text-2xl font-bold text-[#1a1a1a]">{t('auth.verifyTitle')}</h1>
+      <h1 className="mb-2 text-2xl font-bold text-foreground">{t('auth.verifyTitle')}</h1>
       <p className="mb-6 text-sm text-muted-foreground">
         {t('auth.verifyBody')}
         {email ? (
@@ -51,7 +51,7 @@ function VerifyContent() {
         {t('auth.verifyBodyEnd')}
       </p>
 
-      {sent && <p className="mb-4 text-sm text-green-600">{t('auth.resendSuccess')}</p>}
+      {sent && <p className="mb-4 text-sm text-[#39FF6A]">{t('auth.resendSuccess')}</p>}
       {error && <p className="mb-4 text-sm text-destructive">{error}</p>}
 
       <Button onClick={handleResend} disabled={loading || !email} variant="outline" className="w-full">
@@ -59,7 +59,7 @@ function VerifyContent() {
         {t('auth.resendEmail')}
       </Button>
 
-      <Link href="/login" className="mt-6 text-sm font-medium text-[#D4AF37] hover:underline">
+      <Link href="/login" className="mt-6 text-sm font-medium text-[#FFD400] hover:underline">
         {t('auth.backToLogin')}
       </Link>
     </div>

@@ -2,8 +2,6 @@
 
 import Link from 'next/link'
 import { MapPin, BedDouble, Ruler, BadgeCheck } from 'lucide-react'
-import { Card, CardContent } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
 import { useTranslation } from '@/components/LanguageProvider'
 import { Property } from '@/lib/types'
 
@@ -18,8 +16,8 @@ export function PropertyCard({
 
   return (
     <Link href={`/property/${property.id}`}>
-      <Card className="overflow-hidden py-0 gap-0 hover:shadow-lg transition cursor-pointer">
-        <div className="relative h-48 w-full bg-gray-300">
+      <div className="group overflow-hidden border-[3px] border-[#0a0417] bg-[#1F0F3D] arcade-shadow transition-transform hover:-translate-y-1 hover:arcade-shadow">
+        <div className="relative h-48 w-full border-b-[3px] border-[#0a0417] bg-[#2a1650]">
           {property.images?.[0] && (
             // eslint-disable-next-line @next/next/no-img-element
             <img
@@ -28,22 +26,22 @@ export function PropertyCard({
               className="h-full w-full object-cover"
             />
           )}
-          <Badge className="absolute top-2 left-2 bg-[#1a1a1a] text-white hover:bg-[#1a1a1a]">
+          <span className="absolute top-2 left-2 border-2 border-[#0a0417] bg-[#00E5FF] px-2 py-1 font-body text-xs font-semibold tracking-wide text-[#0a0417] uppercase">
             {t(`propertyType.${property.property_type}`)}
-          </Badge>
+          </span>
           {ownerVerified && (
-            <Badge className="absolute top-2 right-2 gap-1 bg-[#D4AF37] text-[#1a1a1a] hover:bg-[#D4AF37]">
+            <span className="absolute top-2 right-2 flex items-center gap-1 border-2 border-[#0a0417] bg-[#39FF6A] px-2 py-1 font-body text-xs font-semibold tracking-wide text-[#0a0417] uppercase">
               <BadgeCheck className="size-3" />
               {t('property.verified')}
-            </Badge>
+            </span>
           )}
         </div>
-        <CardContent className="p-4">
-          <h3 className="font-semibold text-lg text-foreground truncate">{property.title}</h3>
-          <p className="flex items-center gap-1 text-sm text-muted-foreground mb-2">
-            <MapPin className="size-3.5" /> {property.location}
+        <div className="p-4">
+          <h3 className="truncate font-display text-base tracking-wide text-[#FFF6E0]">{property.title}</h3>
+          <p className="mt-1.5 mb-2 flex items-center gap-1 font-body text-base font-medium text-[#B9A7DE]">
+            <MapPin className="size-3.5 shrink-0" /> {property.location}
           </p>
-          <p className="flex items-center gap-3 text-sm text-muted-foreground mb-3">
+          <p className="mb-3 flex items-center gap-3 font-body text-base font-medium text-[#B9A7DE]">
             <span className="flex items-center gap-1">
               <BedDouble className="size-3.5" /> {property.bedrooms} {t('property.bedrooms')}
             </span>
@@ -52,12 +50,13 @@ export function PropertyCard({
               {t('property.area')}
             </span>
           </p>
-          <p className="text-lg font-bold text-[#D4AF37]">
-            {property.price_fcfa.toLocaleString(locale === 'fr' ? 'fr-FR' : 'en-US')} FCFA
-            <span className="text-xs font-normal text-muted-foreground"> {t('common.perMonth')}</span>
+          <p className="border-2 border-[#0a0417] bg-[#0a0417] px-2.5 py-2 font-display text-base text-[#FFD400]">
+            {property.price_fcfa.toLocaleString(locale === 'fr' ? 'fr-FR' : 'en-US')}
+            <span className="text-[#B9A7DE]"> FCFA</span>
+            <span className="ml-1 font-body text-sm font-medium text-[#B9A7DE]">/ {t('common.perMonth')}</span>
           </p>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
     </Link>
   )
 }

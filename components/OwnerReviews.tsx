@@ -120,7 +120,7 @@ export function OwnerReviews({
 
       {loading && (
         <div className="flex justify-center py-6">
-          <Loader2 className="size-5 animate-spin text-[#D4AF37]" />
+          <Loader2 className="size-5 animate-spin text-[#FFD400]" />
         </div>
       )}
 
@@ -131,7 +131,7 @@ export function OwnerReviews({
       {!loading && reviews.length > 0 && (
         <div className="mb-4 flex flex-col gap-3">
           {reviews.map((review) => (
-            <div key={review.id} className="rounded-xl border border-gray-200 bg-white p-4">
+            <div key={review.id} className="rounded-xl border-2 border-border bg-card p-4">
               <div className="mb-1 flex items-center justify-between gap-2">
                 <div className="flex items-center gap-2">
                   <div className="flex size-7 items-center justify-center rounded-full bg-muted text-xs font-medium text-muted-foreground">
@@ -163,7 +163,7 @@ export function OwnerReviews({
       {canReview && currentUserId && !myReview && (
         <form
           onSubmit={handleSubmit}
-          className="flex flex-col gap-3 rounded-xl border border-gray-200 bg-white p-4"
+          className="flex flex-col gap-3 rounded-xl border-2 border-border bg-card p-4"
         >
           <p className="text-sm font-medium text-foreground">{t('property.leaveReview')}</p>
           <StarRating value={rating} onChange={setRating} size="size-5" />

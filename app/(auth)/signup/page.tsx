@@ -64,7 +64,7 @@ export default function SignupPage() {
 
   return (
     <div>
-      <h1 className="mb-1 text-2xl font-bold text-[#1a1a1a]">{t('auth.signupTitle')}</h1>
+      <h1 className="mb-1 text-2xl font-bold text-foreground">{t('auth.signupTitle')}</h1>
       <p className="mb-6 text-sm text-muted-foreground">{t('auth.signupSubtitle')}</p>
 
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
@@ -154,7 +154,7 @@ export default function SignupPage() {
 
       <p className="mt-4 text-center text-sm text-muted-foreground">
         {t('auth.alreadyAccount')}{' '}
-        <Link href="/login" className="font-medium text-[#D4AF37] hover:underline">
+        <Link href="/login" className="font-medium text-[#FFD400] hover:underline">
           {t('auth.logIn')}
         </Link>
       </p>

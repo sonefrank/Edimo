@@ -98,7 +98,7 @@ export function LocationPicker({
       if (markerRef.current) {
         markerRef.current.setLatLng([lat, lng])
       } else {
-        markerRef.current = L.marker([lat, lng], { draggable: true, icon: pinIcon('#D4AF37') })
+        markerRef.current = L.marker([lat, lng], { draggable: true, icon: pinIcon('#FFD400') })
           .addTo(map)
           .on('dragend', () => {
             const pos = markerRef.current!.getLatLng()
@@ -148,7 +148,7 @@ export function LocationPicker({
         } else if (mapRef.current) {
           markerRef.current = L.marker([latitude, longitude], {
             draggable: true,
-            icon: pinIcon('#D4AF37'),
+            icon: pinIcon('#FFD400'),
           })
             .addTo(mapRef.current)
             .on('dragend', () => {
@@ -176,7 +176,7 @@ export function LocationPicker({
       </div>
       <div
         ref={containerRef}
-        className="isolate h-64 w-full overflow-hidden rounded-lg border border-gray-200"
+        className="isolate h-64 w-full overflow-hidden rounded-lg border-2 border-border"
       />
       {geoError && <p className="text-xs text-destructive">{geoError}</p>}
       {value && (

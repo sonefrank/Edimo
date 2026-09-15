@@ -109,7 +109,7 @@ export default function MyPropertiesPage() {
   return (
     <div className="mx-auto max-w-3xl px-4 py-6 sm:px-6">
       <div className="mb-6 flex items-center justify-between gap-2">
-        <h1 className="text-2xl font-bold text-[#1a1a1a]">{t('myProperties.title')}</h1>
+        <h1 className="text-2xl font-bold text-foreground">{t('myProperties.title')}</h1>
         <div className="flex gap-2">
           <Button asChild variant="outline">
             <Link href="/contract/list">{t('contract.myContracts')}</Link>
@@ -125,7 +125,7 @@ export default function MyPropertiesPage() {
 
       {loading && (
         <div className="flex justify-center py-16">
-          <Loader2 className="size-6 animate-spin text-[#D4AF37]" />
+          <Loader2 className="size-6 animate-spin text-[#FFD400]" />
         </div>
       )}
 
@@ -134,7 +134,7 @@ export default function MyPropertiesPage() {
       )}
 
       {!loading && !error && properties.length === 0 && (
-        <div className="rounded-xl border border-dashed border-gray-300 p-12 text-center text-muted-foreground">
+        <div className="rounded-xl border border-dashed border-border p-12 text-center text-muted-foreground">
           {t('myProperties.noListings')}
         </div>
       )}
@@ -156,7 +156,7 @@ export default function MyPropertiesPage() {
                       {t(`propertyType.${property.property_type}`)}
                     </Badge>
                     {!property.approved && (
-                      <Badge className="shrink-0 bg-amber-100 text-amber-800 hover:bg-amber-100">
+                      <Badge className="shrink-0 bg-[#FFD400]/20 text-[#FFD400] border border-[#FFD400]/40 hover:bg-[#FFD400]/20">
                         {t('property.pendingApproval')}
                       </Badge>
                     )}
@@ -169,7 +169,7 @@ export default function MyPropertiesPage() {
                     <p
                       className={`text-xs ${
                         new Date(property.expires_at).getTime() - Date.now() < 3 * 86400000
-                          ? 'text-amber-600'
+                          ? 'text-[#FFD400]'
                           : 'text-muted-foreground'
                       }`}
                     >

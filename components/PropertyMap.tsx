@@ -69,7 +69,7 @@ export function PropertyMap({
       attribution: '© OpenStreetMap contributors',
       maxZoom: 19,
     }).addTo(map)
-    L.marker([propertyLat, propertyLng], { icon: pinIcon('#D4AF37') })
+    L.marker([propertyLat, propertyLng], { icon: pinIcon('#FFD400') })
       .addTo(map)
       .bindPopup(propertyTitle)
 
@@ -92,7 +92,7 @@ export function PropertyMap({
     if (routeLayerRef.current) map.removeLayer(routeLayerRef.current)
     if (originMarkerRef.current) map.removeLayer(originMarkerRef.current)
 
-    originMarkerRef.current = L.marker([origin.lat, origin.lng], { icon: pinIcon('#1a1a1a') })
+    originMarkerRef.current = L.marker([origin.lat, origin.lng], { icon: pinIcon('#0a0417') })
       .addTo(map)
       .bindPopup('Votre position')
 
@@ -100,7 +100,7 @@ export function PropertyMap({
       if (cancelled || !map) return
 
       if (route) {
-        const line = L.polyline(route.coordinates, { color: '#1a1a1a', weight: 4, opacity: 0.8 })
+        const line = L.polyline(route.coordinates, { color: '#0a0417', weight: 4, opacity: 0.8 })
         line.addTo(map)
         routeLayerRef.current = line
         map.fitBounds(line.getBounds(), { padding: [32, 32] })
@@ -115,7 +115,7 @@ export function PropertyMap({
             [origin.lat, origin.lng],
             [propertyLat, propertyLng],
           ],
-          { color: '#1a1a1a', weight: 3, opacity: 0.7, dashArray: '6 8' }
+          { color: '#0a0417', weight: 3, opacity: 0.7, dashArray: '6 8' }
         )
         line.addTo(map)
         routeLayerRef.current = line
@@ -132,7 +132,7 @@ export function PropertyMap({
 
   return (
     <div className="flex flex-col gap-2">
-      <div ref={containerRef} className="isolate h-72 w-full overflow-hidden rounded-xl border border-gray-200" />
+      <div ref={containerRef} className="isolate h-72 w-full overflow-hidden rounded-xl border-2 border-border" />
       {routeInfo && (
         <p className="text-sm text-muted-foreground">
           Itinéraire : {routeInfo.km.toFixed(1)} km · environ {routeInfo.minutes} min en voiture

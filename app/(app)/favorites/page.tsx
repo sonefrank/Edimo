@@ -61,11 +61,11 @@ export default function FavoritesPage() {
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-6 sm:px-6">
-      <h1 className="mb-6 text-2xl font-bold text-[#1a1a1a]">{t('favorites.title')}</h1>
+      <h1 className="mb-6 text-2xl font-bold text-foreground">{t('favorites.title')}</h1>
 
       {loading && (
         <div className="flex justify-center py-16">
-          <Loader2 className="size-6 animate-spin text-[#D4AF37]" />
+          <Loader2 className="size-6 animate-spin text-[#FFD400]" />
         </div>
       )}
 
@@ -74,7 +74,7 @@ export default function FavoritesPage() {
       )}
 
       {!loading && !error && properties.length === 0 && (
-        <div className="rounded-xl border border-dashed border-gray-300 p-12 text-center text-muted-foreground">
+        <div className="rounded-xl border border-dashed border-border p-12 text-center text-muted-foreground">
           {t('favorites.empty')}
         </div>
       )}

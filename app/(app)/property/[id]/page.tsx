@@ -20,7 +20,6 @@ import {
   BadgeCheck,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { Badge } from '@/components/ui/badge'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog'
 import { DisclaimerBanner } from '@/components/DisclaimerBanner'
@@ -40,7 +39,7 @@ function initials(name: string) {
 
 const PropertyMap = dynamic(
   () => import('@/components/PropertyMap').then((m) => m.PropertyMap),
-  { ssr: false, loading: () => <div className="h-72 w-full animate-pulse rounded-xl bg-gray-100" /> }
+  { ssr: false, loading: () => <div className="h-72 w-full animate-pulse rounded-xl bg-muted" /> }
 )
 
 export default function PropertyDetailPage() {
@@ -157,16 +156,18 @@ export default function PropertyDetailPage() {
 
   if (loading) {
     return (
-      <div className="flex justify-center py-24">
-        <Loader2 className="size-6 animate-spin text-[#D4AF37]" />
+      <div className="flex min-h-screen items-center justify-center bg-[#150826] py-24">
+        <Loader2 className="size-6 animate-spin text-[#FFD400]" />
       </div>
     )
   }
 
   if (error || !property) {
     return (
-      <div className="mx-auto max-w-3xl px-4 py-16 text-center">
-        <p className="text-muted-foreground">{error || t('property.notFound')}</p>
+      <div className="flex min-h-screen items-center justify-center bg-[#150826]">
+        <p className="mx-auto max-w-3xl px-4 py-16 text-center font-body text-lg text-[#B9A7DE]">
+          {error || t('property.notFound')}
+        </p>
       </div>
     )
   }
@@ -175,8 +176,9 @@ export default function PropertyDetailPage() {
   const isOwner = userId !== null && userId === property.owner_id
 
   return (
+    <div className="min-h-screen bg-[#150826]">
     <div className="mx-auto max-w-4xl px-4 py-6 sm:px-6">
-      <div className="relative mb-3 h-64 w-full overflow-hidden rounded-xl bg-gray-300 sm:h-96">
+      <div className="relative mb-3 h-64 w-full overflow-hidden border-[3px] border-[#0a0417] bg-[#2a1650] arcade-shadow sm:h-96">
         {images.length > 0 && (
           <button
             type="button"
@@ -226,8 +228,8 @@ export default function PropertyDetailPage() {
               key={src}
               type="button"
               onClick={() => setImageIndex(index)}
-              className={`size-14 shrink-0 overflow-hidden rounded-lg border-2 transition ${
-                index === imageIndex ? 'border-[#D4AF37]' : 'border-transparent opacity-70 hover:opacity-100'
+              className={`size-14 shrink-0 overflow-hidden border-2 transition ${
+                index === imageIndex ? 'border-[#FFD400]' : 'border-[#0a0417] opacity-70 hover:opacity-100'
               }`}
               aria-label={`${t('property.photoOf')} ${index + 1}`}
             >
@@ -298,81 +300,91 @@ export default function PropertyDetailPage() {
       <div className="mb-4 flex items-start justify-between gap-4">
         <div>
           <div className="mb-1.5 flex flex-wrap gap-1.5">
-            <Badge className="bg-[#1a1a1a] text-white hover:bg-[#1a1a1a]">
+            <span className="border-2 border-[#0a0417] bg-[#00E5FF] px-2 py-1 font-body text-xs font-semibold tracking-wide text-[#0a0417] uppercase">
               {t(`propertyType.${property.property_type}`)}
-            </Badge>
+            </span>
             {isOwner && !property.approved && (
-              <Badge className="bg-amber-100 text-amber-800 hover:bg-amber-100">
+              <span className="border-2 border-[#0a0417] bg-[#FFD400] px-2 py-1 font-body text-xs font-semibold tracking-wide text-[#0a0417] uppercase">
                 {t('property.pendingApproval')}
-              </Badge>
+              </span>
             )}
           </div>
-          <h1 className="text-2xl font-bold text-[#1a1a1a]">{property.title}</h1>
-          <p className="mt-1 flex items-center gap-1 text-muted-foreground">
-            <MapPin className="size-4" /> {property.location}
+          <h1 className="font-display text-2xl tracking-wide text-[#FFF6E0]">{property.title}</h1>
+          <p className="mt-2 flex items-center gap-1 font-body text-lg font-medium text-[#B9A7DE]">
+            <MapPin className="size-4 shrink-0" /> {property.location}
           </p>
         </div>
         {!isOwner && (
-          <Button
-            variant="outline"
-            size="icon"
+          <button
+            type="button"
             onClick={toggleFavorite}
             disabled={favoriteLoading}
             aria-label={t('property.addToFavorites')}
+            className="flex size-10 shrink-0 items-center justify-center border-2 border-[#0a0417] bg-[#1F0F3D] arcade-shadow-sm arcade-press"
           >
-            <Heart className={isFavorite ? 'size-4 fill-[#D4AF37] text-[#D4AF37]' : 'size-4'} />
-          </Button>
+            <Heart className={isFavorite ? 'size-4 fill-[#FF2E8C] text-[#FF2E8C]' : 'size-4 text-[#B9A7DE]'} />
+          </button>
         )}
       </div>
 
-      <p className="mb-6 text-2xl font-bold text-[#D4AF37]">
-        {property.price_fcfa.toLocaleString(locale === 'fr' ? 'fr-FR' : 'en-US')} FCFA
-        <span className="text-sm font-normal text-muted-foreground"> {t('common.perMonth')}</span>
+      <p className="mb-6 border-2 border-[#0a0417] bg-[#0a0417] px-3 py-2.5 font-display text-xl text-[#FFD400]">
+        {property.price_fcfa.toLocaleString(locale === 'fr' ? 'fr-FR' : 'en-US')}
+        <span className="text-[#B9A7DE]"> FCFA</span>
+        <span className="ml-1 font-body text-base font-medium text-[#B9A7DE]"> {t('common.perMonth')}</span>
       </p>
 
-      <div className="mb-6 grid grid-cols-3 gap-3 rounded-xl border border-gray-200 bg-white p-4 text-center">
+      <div className="mb-6 grid grid-cols-3 gap-3 border-2 border-[#0a0417] bg-[#1F0F3D] p-4 text-center arcade-shadow-sm">
         <div>
-          <BedDouble className="mx-auto mb-1 size-5 text-[#D4AF37]" />
-          <p className="text-sm font-medium">
+          <BedDouble className="mx-auto mb-1 size-5 text-[#FFD400]" />
+          <p className="font-body text-base font-medium text-[#FFF6E0]">
             {property.bedrooms} {t('property.bedroomsFull')}
           </p>
         </div>
         <div>
-          <Bath className="mx-auto mb-1 size-5 text-[#D4AF37]" />
-          <p className="text-sm font-medium">
+          <Bath className="mx-auto mb-1 size-5 text-[#FFD400]" />
+          <p className="font-body text-base font-medium text-[#FFF6E0]">
             {property.bathrooms} {t('property.bathrooms')}
           </p>
         </div>
         <div>
-          <Ruler className="mx-auto mb-1 size-5 text-[#D4AF37]" />
-          <p className="text-sm font-medium">
+          <Ruler className="mx-auto mb-1 size-5 text-[#FFD400]" />
+          <p className="font-body text-base font-medium text-[#FFF6E0]">
             {property.area_sqm} {t('property.area')}
           </p>
         </div>
       </div>
 
       <div className="mb-6">
-        <h2 className="mb-2 font-semibold text-foreground">{t('property.description')}</h2>
-        <p className="whitespace-pre-line text-sm text-muted-foreground">
+        <h2 className="mb-2 font-body text-sm font-bold tracking-wide text-[#00E5FF] uppercase">
+          {t('property.description')}
+        </h2>
+        <p className="whitespace-pre-line font-body text-lg font-medium text-[#B9A7DE]">
           {property.description}
         </p>
       </div>
 
       {property.amenities?.length > 0 && (
         <div className="mb-6">
-          <h2 className="mb-2 font-semibold text-foreground">{t('property.amenities')}</h2>
+          <h2 className="mb-2 font-body text-sm font-bold tracking-wide text-[#00E5FF] uppercase">
+            {t('property.amenities')}
+          </h2>
           <div className="flex flex-wrap gap-2">
             {property.amenities.map((amenity) => (
-              <Badge key={amenity} variant="secondary">
+              <span
+                key={amenity}
+                className="border-2 border-[#0a0417] bg-[#2a1650] px-2 py-1 font-body text-base font-medium text-[#FFF6E0]"
+              >
                 {t(`amenities.${amenity}`)}
-              </Badge>
+              </span>
             ))}
           </div>
         </div>
       )}
 
       <div className="mb-6">
-        <h2 className="mb-2 font-semibold text-foreground">{t('property.location')}</h2>
+        <h2 className="mb-2 font-body text-sm font-bold tracking-wide text-[#00E5FF] uppercase">
+          {t('property.location')}
+        </h2>
         {property.latitude != null && property.longitude != null ? (
           <div className="flex flex-col gap-3">
             <PropertyMap
@@ -385,36 +397,35 @@ export default function PropertyDetailPage() {
               <div className="flex flex-col items-start gap-2">
                 <Button
                   type="button"
-                  variant="outline"
-                  size="sm"
                   onClick={showItinerary}
                   disabled={locatingOrigin}
+                  className="border-2 border-[#0a0417] bg-[#2a1650] font-body text-sm font-bold tracking-wide text-[#FFF6E0] uppercase arcade-shadow-sm arcade-press hover:bg-[#2a1650]"
                 >
                   <Navigation className="size-3.5" />
                   {locatingOrigin ? t('property.locating') : t('property.showItinerary')}
                 </Button>
-                {originError && <p className="text-xs text-destructive">{originError}</p>}
+                {originError && <p className="font-body text-base font-medium text-[#FF3B3B]">{originError}</p>}
               </div>
             )}
           </div>
         ) : (
-          <p className="text-sm text-muted-foreground">{t('property.noLocation')}</p>
+          <p className="font-body text-base font-medium text-[#B9A7DE]">{t('property.noLocation')}</p>
         )}
       </div>
 
       <OwnerReviews ownerId={property.owner_id} currentUserId={userId} canReview={!isOwner} />
 
       {isOwner ? (
-        <div className="flex flex-col items-center gap-2 rounded-xl border border-gray-200 bg-white p-4 text-center text-sm text-muted-foreground sm:flex-row sm:justify-center">
+        <div className="flex flex-col items-center gap-2 border-2 border-[#0a0417] bg-[#1F0F3D] p-4 text-center font-body text-lg font-medium text-[#B9A7DE] arcade-shadow-sm sm:flex-row sm:justify-center">
           {t('property.thisIsYourListing')}
           <div className="flex gap-3">
-            <Button asChild variant="link" className="h-auto p-0 text-[#D4AF37]">
+            <Button asChild variant="link" className="h-auto p-0 font-body text-lg font-semibold text-[#FFD400]">
               <Link href={`/property/${property.id}/edit`}>
                 <Pencil className="size-3.5" />
                 {t('common.edit')}
               </Link>
             </Button>
-            <Button asChild variant="link" className="h-auto p-0 text-[#D4AF37]">
+            <Button asChild variant="link" className="h-auto p-0 font-body text-lg font-semibold text-[#FFD400]">
               <Link href="/my-properties">{t('property.manageMyListings')}</Link>
             </Button>
           </div>
@@ -424,19 +435,21 @@ export default function PropertyDetailPage() {
           {ownerProfile && (
             <Link
               href={`/profile/${property.owner_id}`}
-              className="mb-4 flex items-center gap-3 rounded-xl border border-gray-200 bg-white p-4 hover:border-[#D4AF37]"
+              className="mb-4 flex items-center gap-3 border-2 border-[#0a0417] bg-[#1F0F3D] p-4 arcade-shadow-sm hover:bg-[#2a1650]"
             >
-              <Avatar>
-                <AvatarFallback>{initials(ownerProfile.full_name)}</AvatarFallback>
+              <Avatar className="border-2 border-[#0a0417]">
+                <AvatarFallback className="bg-[#00E5FF] text-[#0a0417]">
+                  {initials(ownerProfile.full_name)}
+                </AvatarFallback>
               </Avatar>
               <div className="min-w-0">
                 <div className="flex items-center gap-1.5">
-                  <p className="truncate font-medium text-foreground">{ownerProfile.full_name}</p>
+                  <p className="truncate font-body text-lg font-semibold text-[#FFF6E0]">{ownerProfile.full_name}</p>
                   {ownerProfile.verified && (
-                    <BadgeCheck className="size-4 shrink-0 text-[#D4AF37]" aria-label={t('property.verifiedOwner')} />
+                    <BadgeCheck className="size-4 shrink-0 text-[#FFD400]" aria-label={t('property.verifiedOwner')} />
                   )}
                 </div>
-                <p className="text-xs text-muted-foreground">
+                <p className="font-body text-base font-medium text-[#B9A7DE]">
                   {ownerProfile.verified ? t('property.verifiedOwner') : t('property.ownerLabel')} ·{' '}
                   {t('property.viewProfile')}
                 </p>
@@ -444,12 +457,16 @@ export default function PropertyDetailPage() {
             </Link>
           )}
           <DisclaimerBanner />
-          <Button onClick={contactOwner} className="w-full">
+          <Button
+            onClick={contactOwner}
+            className="w-full border-2 border-[#0a0417] bg-[#39FF6A] font-body text-sm font-bold tracking-wide text-[#0a0417] uppercase arcade-shadow-sm arcade-press hover:bg-[#39FF6A]"
+          >
             <MessageCircle className="size-4" />
             {t('property.contactOwner')}
           </Button>
         </>
       )}
+    </div>
     </div>
   )
 }

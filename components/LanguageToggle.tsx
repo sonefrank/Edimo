@@ -15,7 +15,7 @@ export function LanguageToggle({ className = '' }: { className?: string }) {
         type="button"
         onClick={() => setLocale('fr')}
         className={`px-2 py-1 transition ${
-          locale === 'fr' ? 'bg-[#D4AF37] text-[#1a1a1a]' : 'text-white/70 hover:text-white'
+          locale === 'fr' ? 'bg-[#FFD400] text-[#0a0417]' : 'text-white/70 hover:text-white'
         }`}
       >
         FR
@@ -24,7 +24,7 @@ export function LanguageToggle({ className = '' }: { className?: string }) {
         type="button"
         onClick={() => setLocale('en')}
         className={`px-2 py-1 transition ${
-          locale === 'en' ? 'bg-[#D4AF37] text-[#1a1a1a]' : 'text-white/70 hover:text-white'
+          locale === 'en' ? 'bg-[#FFD400] text-[#0a0417]' : 'text-white/70 hover:text-white'
         }`}
       >
         EN

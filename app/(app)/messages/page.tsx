@@ -94,11 +94,11 @@ export default function MessagesPage() {
 
   return (
     <div className="mx-auto max-w-2xl px-4 py-6 sm:px-6">
-      <h1 className="mb-6 text-2xl font-bold text-[#1a1a1a]">{t('messages.title')}</h1>
+      <h1 className="mb-6 text-2xl font-bold text-foreground">{t('messages.title')}</h1>
 
       {loading && (
         <div className="flex justify-center py-16">
-          <Loader2 className="size-6 animate-spin text-[#D4AF37]" />
+          <Loader2 className="size-6 animate-spin text-[#FFD400]" />
         </div>
       )}
 
@@ -107,20 +107,20 @@ export default function MessagesPage() {
       )}
 
       {!loading && !error && conversations.length === 0 && (
-        <div className="rounded-xl border border-dashed border-gray-300 p-12 text-center text-muted-foreground">
+        <div className="rounded-xl border border-dashed border-border p-12 text-center text-muted-foreground">
           {t('messages.empty')}
         </div>
       )}
 
       {!loading && !error && conversations.length > 0 && (
-        <div className="divide-y divide-gray-200 overflow-hidden rounded-xl border border-gray-200 bg-white">
+        <div className="divide-y divide-border overflow-hidden rounded-xl border-2 border-border bg-card">
           {conversations.map((conversation) => (
             <Link
               key={conversation.participant_id}
               href={`/messages/${conversation.participant_id}${
                 conversation.property_id ? `?property=${conversation.property_id}` : ''
               }`}
-              className="flex items-center gap-3 p-4 hover:bg-gray-50"
+              className="flex items-center gap-3 p-4 hover:bg-muted"
             >
               <Avatar>
                 <AvatarFallback>{initials(conversation.participant_name)}</AvatarFallback>
@@ -139,7 +139,7 @@ export default function MessagesPage() {
                 </p>
               </div>
               {conversation.unread_count > 0 && (
-                <span className="flex size-5 shrink-0 items-center justify-center rounded-full bg-[#D4AF37] text-xs font-medium text-[#1a1a1a]">
+                <span className="flex size-5 shrink-0 items-center justify-center rounded-full bg-[#FFD400] text-xs font-medium text-[#0a0417]">
                   {conversation.unread_count}
                 </span>
               )}

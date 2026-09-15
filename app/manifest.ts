@@ -7,8 +7,8 @@ export default function manifest(): MetadataRoute.Manifest {
     description: 'Plateforme de location immobilière à Douala et Yaoundé.',
     start_url: '/',
     display: 'standalone',
-    background_color: '#1a1a1a',
-    theme_color: '#1a1a1a',
+    background_color: '#150826',
+    theme_color: '#150826',
     icons: [
       { src: '/icon-192.png', sizes: '192x192', type: 'image/png' },
       { src: '/icon-512.png', sizes: '512x512', type: 'image/png' },

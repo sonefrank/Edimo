@@ -25,7 +25,7 @@ import { ACTIVE_CITIES, getCity, CityId } from '@/lib/cities'
 
 const LocationPicker = dynamic(
   () => import('@/components/LocationPicker').then((m) => m.LocationPicker),
-  { ssr: false, loading: () => <div className="h-64 w-full animate-pulse rounded-lg bg-gray-100" /> }
+  { ssr: false, loading: () => <div className="h-64 w-full animate-pulse rounded-lg bg-muted" /> }
 )
 
 const AMENITIES = ['Eau', 'Électricité', 'Cuisine', 'Parking', 'Sécurité', 'Meublé', 'Climatisation']
@@ -219,14 +219,14 @@ export function PropertyForm({
 
   return (
     <div className="mx-auto max-w-2xl px-4 py-6 sm:px-6">
-      <h1 className="mb-1 text-2xl font-bold text-[#1a1a1a]">
+      <h1 className="mb-1 text-2xl font-bold text-foreground">
         {mode === 'create' ? t('propertyForm.createTitle') : t('propertyForm.editTitle')}
       </h1>
       <p className="mb-6 text-sm text-muted-foreground">
         {mode === 'create' ? t('propertyForm.createSubtitle') : t('propertyForm.editSubtitle')}
       </p>
 
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4 rounded-xl border border-gray-200 bg-white p-6">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4 rounded-xl border-2 border-border bg-card p-6">
         <div className="flex flex-col gap-1.5">
           <Label htmlFor="city">{t('propertyForm.city')}</Label>
           <Select value={city} onValueChange={(v) => setCity(v as CityId)}>
@@ -253,8 +253,8 @@ export function PropertyForm({
                 onClick={() => setPropertyType(type)}
                 className={`flex-1 rounded-lg border px-4 py-2 text-sm font-medium transition ${
                   propertyType === type
-                    ? 'border-[#D4AF37] bg-[#D4AF37]/10 text-[#1a1a1a]'
-                    : 'border-gray-200 text-muted-foreground hover:border-gray-300'
+                    ? 'border-[#FFD400] bg-[#FFD400]/10 text-[#FFD400]'
+                    : 'border-border text-muted-foreground hover:border-border'
                 }`}
               >
                 {t(`propertyType.${type}`)}
@@ -385,7 +385,7 @@ export function PropertyForm({
           </Label>
           <div className="grid grid-cols-3 gap-3 sm:grid-cols-4">
             {existingImages.map((src, index) => (
-              <div key={src} className="group relative aspect-square overflow-hidden rounded-lg border border-gray-200">
+              <div key={src} className="group relative aspect-square overflow-hidden rounded-lg border-2 border-border">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={src} alt={`${t('property.photoOf')} ${index + 1}`} className="h-full w-full object-cover" />
                 <button
@@ -399,7 +399,7 @@ export function PropertyForm({
               </div>
             ))}
             {photoItems.map((item, index) => (
-              <div key={item.preview} className="group relative aspect-square overflow-hidden rounded-lg border border-gray-200">
+              <div key={item.preview} className="group relative aspect-square overflow-hidden rounded-lg border-2 border-border">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={item.preview} alt={t('propertyForm.newPhoto')} className="h-full w-full object-cover" />
                 <button
@@ -416,7 +416,7 @@ export function PropertyForm({
               <button
                 type="button"
                 onClick={() => fileInputRef.current?.click()}
-                className="flex aspect-square flex-col items-center justify-center gap-1 rounded-lg border border-dashed border-gray-300 text-muted-foreground hover:border-[#D4AF37] hover:text-[#D4AF37]"
+                className="flex aspect-square flex-col items-center justify-center gap-1 rounded-lg border border-dashed border-border text-muted-foreground hover:border-[#FFD400] hover:text-[#FFD400]"
               >
                 <ImagePlus className="size-5" />
                 <span className="text-xs">{t('propertyForm.addPhoto')}</span>
@@ -441,7 +441,7 @@ export function PropertyForm({
               onCheckedChange={(checked) => setAcceptedTerms(checked === true)}
             />
             {t('propertyForm.acceptTermsPrefix')}{' '}
-            <Link href="/terms" target="_blank" className="text-[#D4AF37] underline hover:text-[#1a1a1a]">
+            <Link href="/terms" target="_blank" className="text-[#FFD400] underline hover:text-[#FFD400]/70">
               {t('auth.termsOfService')}
             </Link>{' '}
             {t('propertyForm.acceptTermsSuffix')}

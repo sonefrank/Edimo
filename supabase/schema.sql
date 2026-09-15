@@ -309,3 +309,10 @@ create policy "Les deux parties signent (mise à jour) le contrat"
 create policy "Le propriétaire ou l'admin supprime le contrat"
   on public.contracts for delete to authenticated
   using (auth.uid() = proprietaire_id or public.is_admin());
+
+-- ============ BADGE VÉRIFIÉ PAYANT (abonnement annuel) ============
+alter table public.profiles add column if not exists verified_until timestamptz;
+
+create index if not exists profiles_verified_until_idx
+  on public.profiles (verified_until)
+  where verified_until is not null;

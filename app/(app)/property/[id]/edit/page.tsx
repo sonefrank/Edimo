@@ -46,7 +46,7 @@ export default function EditPropertyPage() {
   if (loading) {
     return (
       <div className="flex justify-center py-24">
-        <Loader2 className="size-6 animate-spin text-[#D4AF37]" />
+        <Loader2 className="size-6 animate-spin text-[#FFD400]" />
       </div>
     )
   }

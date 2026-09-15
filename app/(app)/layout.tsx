@@ -86,7 +86,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   if (!currentUser) {
     return (
       <div className="flex min-h-screen items-center justify-center">
-        <div className="size-6 animate-spin rounded-full border-2 border-[#D4AF37] border-t-transparent" />
+        <div className="size-6 animate-spin rounded-full border-2 border-[#FFD400] border-t-transparent" />
       </div>
     )
   }
@@ -95,7 +95,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
     <UserProvider value={currentUser}>
       <div className="flex min-h-screen flex-col">
         <Navbar unreadCount={unreadCount} />
-        <main className="flex-1 bg-gray-50">{children}</main>
+        <main className="flex-1 bg-background">{children}</main>
       </div>
     </UserProvider>
   )

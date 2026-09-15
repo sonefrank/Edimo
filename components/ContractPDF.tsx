@@ -26,8 +26,12 @@ export const ContractPDF = forwardRef<HTMLDivElement, { data: ContractPDFData }>
   const { t, locale } = useTranslation()
 
   return (
-    <div ref={ref} className="bg-white p-12 text-black" style={{ width: '210mm', minHeight: '297mm' }}>
-      <h1 className="mb-8 text-center text-4xl font-bold">{t('contract.title')}</h1>
+    <div
+      ref={ref}
+      className="bg-white p-12 font-serif text-black"
+      style={{ width: '210mm', minHeight: '297mm' }}
+    >
+      <h1 className="mb-8 text-center text-4xl font-bold font-serif tracking-normal normal-case">{t('contract.title')}</h1>
 
       <div className="mb-8 grid grid-cols-2 gap-4 border-b pb-8">
         <div>
@@ -43,7 +47,7 @@ export const ContractPDF = forwardRef<HTMLDivElement, { data: ContractPDFData }>
       </div>
 
       <div className="mb-8">
-        <h2 className="mb-4 text-lg font-bold">{t('contract.rentedProperty')}</h2>
+        <h2 className="mb-4 text-lg font-bold font-serif tracking-normal normal-case">{t('contract.rentedProperty')}</h2>
         <div className="space-y-2 border-l-4 border-[#D4AF37] pl-4">
           <p>
             <strong>{t('contract.titleLabel')}:</strong> {data.propertyTitle}
@@ -66,7 +70,7 @@ export const ContractPDF = forwardRef<HTMLDivElement, { data: ContractPDFData }>
       </div>
 
       <div className="mb-8">
-        <h2 className="mb-4 text-lg font-bold">{t('contract.mainClauses')}</h2>
+        <h2 className="mb-4 text-lg font-bold font-serif tracking-normal normal-case">{t('contract.mainClauses')}</h2>
         <ol className="space-y-3 text-sm">
           <li>1. {t('contract.clause1')}</li>
           <li>2. {t('contract.clause2')}</li>
@@ -79,7 +83,7 @@ export const ContractPDF = forwardRef<HTMLDivElement, { data: ContractPDFData }>
       </div>
 
       <div className="mb-8 border-t-2 border-gray-300 pt-8">
-        <h2 className="mb-8 text-lg font-bold">{t('contract.signatures')}</h2>
+        <h2 className="mb-8 text-lg font-bold font-serif tracking-normal normal-case">{t('contract.signatures')}</h2>
 
         <div className="grid grid-cols-2 gap-8">
           <div>

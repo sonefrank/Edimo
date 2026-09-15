@@ -30,7 +30,7 @@ export function StarRating({
         >
           <Star
             className={`${size} ${
-              star <= displayValue ? 'fill-[#D4AF37] text-[#D4AF37]' : 'text-gray-300'
+              star <= displayValue ? 'fill-[#FFD400] text-[#FFD400]' : 'text-white/20'
             }`}
           />
         </button>

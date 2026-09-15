@@ -37,7 +37,7 @@ export function SignatureCanvasInput({
   }
 
   return (
-    <div className="rounded-lg border-2 border-dashed border-gray-300 bg-white p-4">
+    <div className="rounded-lg border-2 border-dashed border-border bg-card p-4">
       <h3 className="mb-4 font-bold text-foreground">{t('contract.draw.title')}</h3>
 
       <SignatureCanvas
@@ -45,7 +45,7 @@ export function SignatureCanvasInput({
         canvasProps={{
           width: 500,
           height: 150,
-          className: 'w-full max-w-full border border-gray-300 bg-white cursor-crosshair rounded',
+          className: 'w-full max-w-full border-2 border-border bg-card cursor-crosshair rounded',
         }}
         backgroundColor="white"
       />
@@ -64,7 +64,7 @@ export function SignatureCanvasInput({
       </div>
 
       {isSigned && (
-        <p className="mt-2 text-sm font-medium text-green-600">✓ {t('contract.draw.captured')}</p>
+        <p className="mt-2 text-sm font-medium text-[#39FF6A]">✓ {t('contract.draw.captured')}</p>
       )}
     </div>
   )

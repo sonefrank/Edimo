@@ -36,7 +36,7 @@ export default function ContractListPage() {
   return (
     <div className="mx-auto max-w-2xl px-4 py-6 sm:px-6">
       <div className="mb-6 flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-[#1a1a1a]">{t('contract.myContracts')}</h1>
+        <h1 className="text-2xl font-bold text-foreground">{t('contract.myContracts')}</h1>
         {userType === 'propriétaire' && (
           <Button asChild size="sm">
             <Link href="/contract/create">
@@ -52,7 +52,7 @@ export default function ContractListPage() {
           <Loader2 className="size-8 animate-spin text-muted-foreground" />
         </div>
       ) : contracts.length === 0 ? (
-        <div className="rounded-xl border border-dashed border-gray-300 py-16 text-center">
+        <div className="rounded-xl border border-dashed border-border py-16 text-center">
           <FileText className="mx-auto mb-3 size-10 text-muted-foreground" />
           <p className="text-muted-foreground">{t('contract.noContracts')}</p>
         </div>
@@ -62,10 +62,10 @@ export default function ContractListPage() {
             <Link
               key={contract.id}
               href={`/contract/${contract.id}/sign`}
-              className="flex items-center justify-between rounded-xl border border-gray-200 bg-white p-4 transition-colors hover:border-[#D4AF37]"
+              className="flex items-center justify-between rounded-xl border-2 border-border bg-card p-4 transition-colors hover:border-[#FFD400]"
             >
               <div>
-                <p className="font-medium text-[#1a1a1a]">{contract.contract_data.propertyTitle}</p>
+                <p className="font-medium text-foreground">{contract.contract_data.propertyTitle}</p>
                 <p className="text-sm text-muted-foreground">
                   {contract.locataire_name} ·{' '}
                   {new Date(contract.created_at).toLocaleDateString(locale === 'fr' ? 'fr-FR' : 'en-US')}

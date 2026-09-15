@@ -3,6 +3,10 @@
     {
       "path": "/api/push/check-expiring",
       "schedule": "0 7 * * *"
+    },
+    {
+      "path": "/api/verified/check-expiry",
+      "schedule": "0 8 * * *"
     }
   ]
 }

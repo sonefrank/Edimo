@@ -79,7 +79,7 @@ export default function PublicProfilePage() {
   if (loading) {
     return (
       <div className="flex justify-center py-24">
-        <Loader2 className="size-6 animate-spin text-[#D4AF37]" />
+        <Loader2 className="size-6 animate-spin text-[#FFD400]" />
       </div>
     )
   }
@@ -96,21 +96,21 @@ export default function PublicProfilePage() {
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-6 sm:px-6">
-      <div className="mb-6 rounded-xl border border-gray-200 bg-white p-6 text-center">
+      <div className="mb-6 rounded-xl border-2 border-border bg-card p-6 text-center">
         <Avatar size="lg" className="mx-auto mb-4 size-20">
           {profile.avatar_url && <AvatarImage src={profile.avatar_url} alt={profile.full_name} />}
           <AvatarFallback className="text-xl">{initials(profile.full_name)}</AvatarFallback>
         </Avatar>
         <div className="mb-1 flex items-center justify-center gap-1.5">
-          <h1 className="text-xl font-bold text-[#1a1a1a]">{profile.full_name}</h1>
-          {profile.verified && <BadgeCheck className="size-5 text-[#D4AF37]" />}
+          <h1 className="text-xl font-bold text-foreground">{profile.full_name}</h1>
+          {profile.verified && <BadgeCheck className="size-5 text-[#FFD400]" />}
         </div>
         <div className="mb-3 flex items-center justify-center gap-1.5">
           <Badge variant="secondary">
             {profile.user_type === 'propriétaire' ? t('auth.owner') : t('auth.tenant')}
           </Badge>
           {profile.verified && (
-            <Badge className="bg-[#D4AF37] text-[#1a1a1a] hover:bg-[#D4AF37]">
+            <Badge className="bg-[#FFD400] text-[#0a0417] hover:bg-[#FFD400]">
               {t('profile.verifiedByEdimo')}
             </Badge>
           )}
@@ -127,7 +127,7 @@ export default function PublicProfilePage() {
         {isOwnProfile && (
           <p className="mt-3 text-xs text-muted-foreground">
             {t('profile.thisIsYourPublicProfile')}{' '}
-            <Link href="/profile" className="font-medium text-[#D4AF37] hover:underline">
+            <Link href="/profile" className="font-medium text-[#FFD400] hover:underline">
               {t('profile.manageMyProfile')}
             </Link>
           </p>

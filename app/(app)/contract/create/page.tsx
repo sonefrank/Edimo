@@ -108,9 +108,9 @@ function CreateContractForm() {
 
   return (
     <div className="mx-auto max-w-xl px-4 py-6 sm:px-6">
-      <h1 className="mb-6 text-2xl font-bold text-[#1a1a1a]">{t('contract.createTitle')}</h1>
+      <h1 className="mb-6 text-2xl font-bold text-foreground">{t('contract.createTitle')}</h1>
 
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4 rounded-xl border border-gray-200 bg-white p-6">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4 rounded-xl border-2 border-border bg-card p-6">
         <div className="flex flex-col gap-1.5">
           <Label htmlFor="property">{t('contract.property')}</Label>
           {loadingProperties ? (

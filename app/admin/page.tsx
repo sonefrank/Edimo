@@ -70,8 +70,14 @@ export default function AdminPage() {
 
   function verifyUser(id: string) {
     withPending(id, async () => {
-      await supabase.from('profiles').update({ verified: true }).eq('id', id)
-      setUsers((prev) => prev.map((u) => (u.id === id ? { ...u, verified: true } : u)))
+      const verifiedUntil = new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString()
+      await supabase
+        .from('profiles')
+        .update({ verified: true, verified_until: verifiedUntil })
+        .eq('id', id)
+      setUsers((prev) =>
+        prev.map((u) => (u.id === id ? { ...u, verified: true, verified_until: verifiedUntil } : u))
+      )
     })
   }
 
@@ -117,7 +123,7 @@ export default function AdminPage() {
   if (authorized === null || authorized === false) {
     return (
       <div className="flex min-h-screen items-center justify-center">
-        <Loader2 className="size-6 animate-spin text-[#D4AF37]" />
+        <Loader2 className="size-6 animate-spin text-[#FFD400]" />
       </div>
     )
   }
@@ -129,45 +135,45 @@ export default function AdminPage() {
   )
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="bg-[#1a1a1a] px-6 py-5">
-        <h1 className="text-xl font-bold text-[#D4AF37]">EDIMO · Administration</h1>
+    <div className="min-h-screen bg-muted">
+      <div className="bg-[#0a0417] px-6 py-5">
+        <h1 className="text-xl font-bold text-[#FFD400]">EDIMO · Administration</h1>
       </div>
 
       <div className="mx-auto max-w-5xl px-4 py-6 sm:px-6">
         <div className="mb-6 grid grid-cols-2 gap-4 sm:grid-cols-4">
           <Card>
             <CardContent className="flex items-center gap-3 p-4">
-              <Users className="size-6 text-[#D4AF37]" />
+              <Users className="size-6 text-[#FFD400]" />
               <div>
-                <p className="text-lg font-bold text-[#1a1a1a]">{users.length}</p>
+                <p className="text-lg font-bold text-foreground">{users.length}</p>
                 <p className="text-xs text-muted-foreground">Utilisateurs</p>
               </div>
             </CardContent>
           </Card>
           <Card>
             <CardContent className="flex items-center gap-3 p-4">
-              <Home className="size-6 text-[#D4AF37]" />
+              <Home className="size-6 text-[#FFD400]" />
               <div>
-                <p className="text-lg font-bold text-[#1a1a1a]">{properties.length}</p>
+                <p className="text-lg font-bold text-foreground">{properties.length}</p>
                 <p className="text-xs text-muted-foreground">Annonces</p>
               </div>
             </CardContent>
           </Card>
           <Card>
             <CardContent className="flex items-center gap-3 p-4">
-              <Star className="size-6 text-[#D4AF37]" />
+              <Star className="size-6 text-[#FFD400]" />
               <div>
-                <p className="text-lg font-bold text-[#1a1a1a]">{reviews.length}</p>
+                <p className="text-lg font-bold text-foreground">{reviews.length}</p>
                 <p className="text-xs text-muted-foreground">Avis</p>
               </div>
             </CardContent>
           </Card>
-          <Card className={pendingUsers.length + pendingProperties.length > 0 ? 'border-amber-300' : undefined}>
+          <Card className={pendingUsers.length + pendingProperties.length > 0 ? 'border-[#FFD400]/60' : undefined}>
             <CardContent className="flex items-center gap-3 p-4">
-              <Check className="size-6 text-amber-600" />
+              <Check className="size-6 text-[#FFD400]" />
               <div>
-                <p className="text-lg font-bold text-[#1a1a1a]">
+                <p className="text-lg font-bold text-foreground">
                   {pendingUsers.length + pendingProperties.length}
                 </p>
                 <p className="text-xs text-muted-foreground">En attente</p>
@@ -178,7 +184,7 @@ export default function AdminPage() {
 
         {loading ? (
           <div className="flex justify-center py-16">
-            <Loader2 className="size-6 animate-spin text-[#D4AF37]" />
+            <Loader2 className="size-6 animate-spin text-[#FFD400]" />
           </div>
         ) : (
           <Tabs defaultValue="users">
@@ -204,7 +210,7 @@ export default function AdminPage() {
                         </Badge>
                         {u.verified && (
                           <Badge className="mt-1 ml-1.5 bg-green-100 text-green-700 hover:bg-green-100">
-                            Vérifié
+                            Vérifié{u.verified_until ? ` · jusqu'au ${new Date(u.verified_until).toLocaleDateString('fr-FR')}` : ''}
                           </Badge>
                         )}
                       </div>
@@ -239,7 +245,7 @@ export default function AdminPage() {
                   <p className="py-8 text-center text-muted-foreground">Aucune annonce.</p>
                 )}
                 {sortedProperties.map((p) => (
-                  <Card key={p.id} className={!p.approved ? 'border-amber-300' : undefined}>
+                  <Card key={p.id} className={!p.approved ? 'border-[#FFD400]/60' : undefined}>
                     <CardContent className="flex items-center justify-between gap-4 p-4">
                       <div className="min-w-0">
                         <p className="truncate font-medium text-foreground">{p.title}</p>
@@ -257,7 +263,7 @@ export default function AdminPage() {
                             Approuvée
                           </Badge>
                         ) : (
-                          <Badge className="mt-1 ml-1.5 bg-amber-100 text-amber-800 hover:bg-amber-100">
+                          <Badge className="mt-1 ml-1.5 bg-[#FFD400]/20 text-[#FFD400] border border-[#FFD400]/40 hover:bg-[#FFD400]/20">
                             En attente
                           </Badge>
                         )}

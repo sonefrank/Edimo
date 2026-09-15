@@ -5,6 +5,7 @@ export interface User {
   phone?: string
   user_type: 'propriétaire' | 'locataire'
   verified: boolean
+  verified_until?: string | null
   bio?: string
   avatar_url?: string
   created_at: string

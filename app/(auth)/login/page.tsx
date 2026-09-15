@@ -38,7 +38,7 @@ export default function LoginPage() {
 
   return (
     <div>
-      <h1 className="mb-1 text-2xl font-bold text-[#1a1a1a]">{t('auth.loginTitle')}</h1>
+      <h1 className="mb-1 text-2xl font-bold text-foreground">{t('auth.loginTitle')}</h1>
       <p className="mb-6 text-sm text-muted-foreground">{t('auth.loginSubtitle')}</p>
 
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
@@ -57,7 +57,7 @@ export default function LoginPage() {
         <div className="flex flex-col gap-1.5">
           <div className="flex items-center justify-between">
             <Label htmlFor="password">{t('auth.password')}</Label>
-            <Link href="/forgot-password" className="text-xs font-medium text-[#D4AF37] hover:underline">
+            <Link href="/forgot-password" className="text-xs font-medium text-[#FFD400] hover:underline">
               {t('auth.forgotPassword')}
             </Link>
           </div>
@@ -81,7 +81,7 @@ export default function LoginPage() {
 
       <p className="mt-6 text-center text-sm text-muted-foreground">
         {t('auth.noAccount')}{' '}
-        <Link href="/signup" className="font-medium text-[#D4AF37] hover:underline">
+        <Link href="/signup" className="font-medium text-[#FFD400] hover:underline">
           {t('auth.signUp')}
         </Link>
       </p>

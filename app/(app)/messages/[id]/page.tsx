@@ -131,21 +131,21 @@ export default function ConversationPage() {
   if (loading) {
     return (
       <div className="flex justify-center py-24">
-        <Loader2 className="size-6 animate-spin text-[#D4AF37]" />
+        <Loader2 className="size-6 animate-spin text-[#FFD400]" />
       </div>
     )
   }
 
   return (
     <div className="mx-auto flex h-[calc(100vh-64px)] max-w-2xl flex-col px-4 py-4 sm:px-6">
-      <h1 className="mb-3 text-lg font-semibold text-[#1a1a1a]">
+      <h1 className="mb-3 text-lg font-semibold text-foreground">
         {participantName || t('messages.defaultUser')}
       </h1>
       <DisclaimerBanner />
 
       {error && <p className="mb-4 text-sm text-destructive">{error}</p>}
 
-      <div className="mb-4 flex-1 space-y-2 overflow-y-auto rounded-xl border border-gray-200 bg-white p-4">
+      <div className="mb-4 flex-1 space-y-2 overflow-y-auto rounded-xl border-2 border-border bg-card p-4">
         {messages.length === 0 && (
           <p className="py-8 text-center text-sm text-muted-foreground">
             {t('messages.startConversation')}
@@ -158,8 +158,8 @@ export default function ConversationPage() {
               <div
                 className={`max-w-[75%] rounded-2xl px-3.5 py-2 text-sm ${
                   isMine
-                    ? 'bg-[#1a1a1a] text-white'
-                    : 'bg-gray-100 text-foreground'
+                    ? 'bg-[#0a0417] text-white'
+                    : 'bg-muted text-foreground'
                 }`}
               >
                 {message.message_text}

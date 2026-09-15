@@ -171,13 +171,13 @@ export default function SignContractPage() {
   return (
     <div className="mx-auto max-w-3xl px-4 py-6 sm:px-6">
       <div className="mb-4 flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-[#1a1a1a]">{t('contract.signTitle')}</h1>
+        <h1 className="text-2xl font-bold text-foreground">{t('contract.signTitle')}</h1>
         <Badge variant={contract.status === 'signed_draft' ? 'default' : 'secondary'}>{statusLabel}</Badge>
       </div>
 
       <ContractDisclaimer />
 
-      <div className="overflow-x-auto rounded-xl border border-gray-200 bg-gray-50 p-4">
+      <div className="overflow-x-auto rounded-xl border-2 border-border bg-muted p-4">
         <div className="origin-top-left scale-[0.42] sm:scale-[0.6] lg:scale-100">
           <ContractPDF ref={pdfRef} data={pdfData} />
         </div>
@@ -191,7 +191,7 @@ export default function SignContractPage() {
       ) : alreadySigned ? (
         <p className="mt-6 text-center text-sm text-muted-foreground">{t('contract.alreadySigned')}</p>
       ) : (
-        <div className="mt-6 flex flex-col gap-4 rounded-xl border border-gray-200 bg-white p-6">
+        <div className="mt-6 flex flex-col gap-4 rounded-xl border-2 border-border bg-card p-6">
           <Tabs
             value={signatureMethod}
             onValueChange={(value) => {
@@ -218,7 +218,7 @@ export default function SignContractPage() {
                   <img
                     src={capturedSignature}
                     alt={t('contract.imageUploaded')}
-                    className="max-h-24 rounded border border-gray-300"
+                    className="max-h-24 rounded border-2 border-border"
                   />
                 </div>
               )}

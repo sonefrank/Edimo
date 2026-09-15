@@ -127,13 +127,13 @@ export default function AlertsPage() {
 
   return (
     <div className="mx-auto max-w-2xl px-4 py-6 sm:px-6">
-      <h1 className="mb-1 text-2xl font-bold text-[#1a1a1a]">{t('alerts.title')}</h1>
+      <h1 className="mb-1 text-2xl font-bold text-foreground">{t('alerts.title')}</h1>
       <p className="mb-6 text-sm text-muted-foreground">{t('alerts.subtitle')}</p>
 
-      <div className="mb-6 flex items-center justify-between rounded-xl border border-gray-200 bg-white p-4">
+      <div className="mb-6 flex items-center justify-between rounded-xl border-2 border-border bg-card p-4">
         <div className="flex items-center gap-3">
           {pushState === 'granted' ? (
-            <Bell className="size-5 text-[#D4AF37]" />
+            <Bell className="size-5 text-[#FFD400]" />
           ) : (
             <BellOff className="size-5 text-muted-foreground" />
           )}
@@ -158,7 +158,7 @@ export default function AlertsPage() {
 
       <form
         onSubmit={handleCreate}
-        className="mb-6 flex flex-col gap-3 rounded-xl border border-gray-200 bg-white p-4"
+        className="mb-6 flex flex-col gap-3 rounded-xl border-2 border-border bg-card p-4"
       >
         <p className="text-sm font-medium text-foreground">{t('alerts.newAlert')}</p>
         <div className="grid grid-cols-2 gap-3">
@@ -219,7 +219,7 @@ export default function AlertsPage() {
 
       {loading && (
         <div className="flex justify-center py-12">
-          <Loader2 className="size-6 animate-spin text-[#D4AF37]" />
+          <Loader2 className="size-6 animate-spin text-[#FFD400]" />
         </div>
       )}
 

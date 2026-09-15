@@ -37,15 +37,15 @@ export default function ForgotPasswordPage() {
   if (sent) {
     return (
       <div className="flex flex-col items-center text-center">
-        <div className="mb-4 flex size-14 items-center justify-center rounded-full bg-[#D4AF37]/10">
-          <MailCheck className="size-7 text-[#D4AF37]" />
+        <div className="mb-4 flex size-14 items-center justify-center rounded-full bg-[#FFD400]/10">
+          <MailCheck className="size-7 text-[#FFD400]" />
         </div>
-        <h1 className="mb-2 text-2xl font-bold text-[#1a1a1a]">{t('auth.forgotSentTitle')}</h1>
+        <h1 className="mb-2 text-2xl font-bold text-foreground">{t('auth.forgotSentTitle')}</h1>
         <p className="mb-6 text-sm text-muted-foreground">
           {t('auth.forgotSentBody')} <span className="font-medium text-foreground">{email}</span>,
           {t('auth.forgotSentBodyEnd')}
         </p>
-        <Link href="/login" className="text-sm font-medium text-[#D4AF37] hover:underline">
+        <Link href="/login" className="text-sm font-medium text-[#FFD400] hover:underline">
           {t('auth.backToLogin')}
         </Link>
       </div>
@@ -54,7 +54,7 @@ export default function ForgotPasswordPage() {
 
   return (
     <div>
-      <h1 className="mb-1 text-2xl font-bold text-[#1a1a1a]">{t('auth.forgotTitle')}</h1>
+      <h1 className="mb-1 text-2xl font-bold text-foreground">{t('auth.forgotTitle')}</h1>
       <p className="mb-6 text-sm text-muted-foreground">{t('auth.forgotSubtitle')}</p>
 
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
@@ -79,7 +79,7 @@ export default function ForgotPasswordPage() {
       </form>
 
       <p className="mt-6 text-center text-sm text-muted-foreground">
-        <Link href="/login" className="font-medium text-[#D4AF37] hover:underline">
+        <Link href="/login" className="font-medium text-[#FFD400] hover:underline">
           {t('auth.backToLogin')}
         </Link>
       </p>

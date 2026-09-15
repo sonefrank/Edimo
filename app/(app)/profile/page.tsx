@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState, FormEvent, ChangeEvent } from 'react'
 import { useRouter } from 'next/navigation'
-import { Loader2, LogOut, Phone, Mail, BadgeCheck, Pencil, Camera } from 'lucide-react'
+import { Loader2, LogOut, Phone, Mail, BadgeCheck, Pencil, Camera, ShieldCheck } from 'lucide-react'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
@@ -12,6 +12,7 @@ import { Textarea } from '@/components/ui/textarea'
 import { useTranslation } from '@/components/LanguageProvider'
 import { supabase } from '@/lib/supabase'
 import { signOut } from '@/lib/auth'
+import { requestVerifiedBadge, VERIFIED_BADGE_PRICE_FCFA } from '@/lib/verifiedBadge'
 import { User } from '@/lib/types'
 
 function initials(name: string) {
@@ -25,7 +26,7 @@ function initials(name: string) {
 
 export default function ProfilePage() {
   const router = useRouter()
-  const { t } = useTranslation()
+  const { t, locale } = useTranslation()
   const fileInputRef = useRef<HTMLInputElement>(null)
   const [profile, setProfile] = useState<User | null>(null)
   const [loading, setLoading] = useState(true)
@@ -40,6 +41,10 @@ export default function ProfilePage() {
   const [avatarPreview, setAvatarPreview] = useState('')
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState('')
+
+  const [requestingBadge, setRequestingBadge] = useState(false)
+  const [badgeRequestSent, setBadgeRequestSent] = useState(false)
+  const [badgeRequestError, setBadgeRequestError] = useState('')
 
   useEffect(() => {
     async function load() {
@@ -62,7 +67,8 @@ export default function ProfilePage() {
           full_name: profileData?.full_name ?? user.user_metadata?.full_name ?? t('messages.defaultUser'),
           phone: profileData?.phone ?? user.user_metadata?.phone,
           user_type: profileData?.user_type ?? user.user_metadata?.user_type ?? 'locataire',
-          verified: Boolean(user.email_confirmed_at),
+          verified: profileData?.verified ?? false,
+          verified_until: profileData?.verified_until ?? null,
           bio: profileData?.bio,
           avatar_url: profileData?.avatar_url,
           created_at: user.created_at,
@@ -185,10 +191,29 @@ export default function ProfilePage() {
     router.push('/login')
   }
 
+  async function handleRequestVerifiedBadge() {
+    if (!profile) return
+    setRequestingBadge(true)
+    setBadgeRequestError('')
+    try {
+      const { error: requestError } = await requestVerifiedBadge(
+        profile.id,
+        `${t('profile.verifiedBadgeRequestMessage')}\n\n— ${profile.full_name}`
+      )
+      if (requestError) {
+        setBadgeRequestError(t('profile.verifiedBadgeRequestError'))
+        return
+      }
+      setBadgeRequestSent(true)
+    } finally {
+      setRequestingBadge(false)
+    }
+  }
+
   if (loading || !profile) {
     return (
       <div className="flex justify-center py-24">
-        <Loader2 className="size-6 animate-spin text-[#D4AF37]" />
+        <Loader2 className="size-6 animate-spin text-[#FFD400]" />
       </div>
     )
   }
@@ -196,10 +221,10 @@ export default function ProfilePage() {
   if (editing) {
     return (
       <div className="mx-auto max-w-lg px-4 py-6 sm:px-6">
-        <h1 className="mb-6 text-2xl font-bold text-[#1a1a1a]">{t('profile.editTitle')}</h1>
+        <h1 className="mb-6 text-2xl font-bold text-foreground">{t('profile.editTitle')}</h1>
         <form
           onSubmit={handleSave}
-          className="flex flex-col gap-4 rounded-xl border border-gray-200 bg-white p-6"
+          className="flex flex-col gap-4 rounded-xl border-2 border-border bg-card p-6"
         >
           <div className="flex flex-col items-center gap-2">
             <button
@@ -266,7 +291,7 @@ export default function ProfilePage() {
 
   return (
     <div className="mx-auto max-w-lg px-4 py-6 sm:px-6">
-      <div className="rounded-xl border border-gray-200 bg-white p-6 text-center">
+      <div className="rounded-xl border-2 border-border bg-card p-6 text-center">
         <div className="relative mx-auto mb-4 w-fit">
           <Avatar size="lg" className="size-20">
             {profile.avatar_url && <AvatarImage src={profile.avatar_url} alt={profile.full_name} />}
@@ -275,15 +300,15 @@ export default function ProfilePage() {
           <button
             type="button"
             onClick={startEditing}
-            className="absolute -right-1 -bottom-1 flex size-7 items-center justify-center rounded-full bg-[#1a1a1a] text-white hover:bg-[#1a1a1a]/80"
+            className="absolute -right-1 -bottom-1 flex size-7 items-center justify-center rounded-full bg-[#0a0417] text-white hover:bg-[#0a0417]/80"
             aria-label={t('profile.editTitle')}
           >
             <Pencil className="size-3.5" />
           </button>
         </div>
         <div className="mb-1 flex items-center justify-center gap-1.5">
-          <h1 className="text-xl font-bold text-[#1a1a1a]">{profile.full_name}</h1>
-          {profile.verified && <BadgeCheck className="size-5 text-[#D4AF37]" />}
+          <h1 className="text-xl font-bold text-foreground">{profile.full_name}</h1>
+          {profile.verified && <BadgeCheck className="size-5 text-[#FFD400]" />}
         </div>
         <Badge variant="secondary" className="mb-4">
           {profile.user_type === 'propriétaire' ? t('auth.owner') : t('auth.tenant')}
@@ -302,19 +327,72 @@ export default function ProfilePage() {
           )}
         </div>
 
-        <div className="mb-6 grid grid-cols-3 divide-x divide-gray-200 rounded-lg border border-gray-200">
+        <div className="mb-6 grid grid-cols-3 divide-x divide-border rounded-lg border-2 border-border">
           <div className="p-3">
-            <p className="text-lg font-bold text-[#1a1a1a]">{stats.favorites}</p>
+            <p className="text-lg font-bold text-foreground">{stats.favorites}</p>
             <p className="text-xs text-muted-foreground">{t('profile.favorites')}</p>
           </div>
           <div className="p-3">
-            <p className="text-lg font-bold text-[#1a1a1a]">{stats.conversations}</p>
+            <p className="text-lg font-bold text-foreground">{stats.conversations}</p>
             <p className="text-xs text-muted-foreground">{t('profile.messages')}</p>
           </div>
           <div className="p-3">
-            <p className="text-lg font-bold text-[#1a1a1a]">{stats.reviews}</p>
+            <p className="text-lg font-bold text-foreground">{stats.reviews}</p>
             <p className="text-xs text-muted-foreground">{t('profile.reviews')}</p>
           </div>
+        </div>
+
+        <div className="mb-6 rounded-lg border-2 border-border bg-muted p-4 text-left">
+          {profile.verified ? (
+            <>
+              <p className="flex items-center gap-1.5 text-sm font-semibold text-[#39FF6A]">
+                <ShieldCheck className="size-4 shrink-0" />
+                {t('profile.verifiedBadgeActive')}
+              </p>
+              {profile.verified_until && (
+                <p className="mt-1 text-xs text-muted-foreground">
+                  {t('profile.verifiedBadgeActiveUntil')}{' '}
+                  {new Date(profile.verified_until).toLocaleDateString(locale === 'fr' ? 'fr-FR' : 'en-US')}
+                </p>
+              )}
+              {profile.verified_until && !badgeRequestSent && (
+                <Button
+                  size="sm"
+                  variant="outline"
+                  className="mt-3"
+                  onClick={handleRequestVerifiedBadge}
+                  disabled={requestingBadge}
+                >
+                  {requestingBadge && <Loader2 className="size-4 animate-spin" />}
+                  {requestingBadge ? t('profile.verifiedBadgeRequesting') : t('profile.verifiedBadgeRenew')}
+                </Button>
+              )}
+              {badgeRequestSent && (
+                <p className="mt-3 text-xs font-medium text-[#39FF6A]">{t('profile.verifiedBadgeRequestSent')}</p>
+              )}
+            </>
+          ) : (
+            <>
+              <p className="flex items-center gap-1.5 text-sm font-semibold text-[#FFD400]">
+                <ShieldCheck className="size-4 shrink-0" />
+                {t('profile.verifiedBadgeTitle')}
+              </p>
+              <p className="mt-1 text-xs text-muted-foreground">{t('profile.verifiedBadgePitch')}</p>
+              <p className="mt-2 font-display text-lg text-[#FFD400]">
+                {VERIFIED_BADGE_PRICE_FCFA.toLocaleString(locale === 'fr' ? 'fr-FR' : 'en-US')} FCFA
+                <span className="ml-1 font-body text-xs text-muted-foreground">{t('profile.verifiedBadgePerYear')}</span>
+              </p>
+              {badgeRequestSent ? (
+                <p className="mt-3 text-xs font-medium text-[#39FF6A]">{t('profile.verifiedBadgeRequestSent')}</p>
+              ) : (
+                <Button size="sm" className="mt-3" onClick={handleRequestVerifiedBadge} disabled={requestingBadge}>
+                  {requestingBadge && <Loader2 className="size-4 animate-spin" />}
+                  {requestingBadge ? t('profile.verifiedBadgeRequesting') : t('profile.verifiedBadgeRequestButton')}
+                </Button>
+              )}
+              {badgeRequestError && <p className="mt-2 text-xs text-destructive">{badgeRequestError}</p>}
+            </>
+          )}
         </div>
 
         <div className="flex gap-2">

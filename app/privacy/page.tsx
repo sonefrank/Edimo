@@ -7,15 +7,15 @@ export const metadata = {
 
 export default function PrivacyPage() {
   return (
-    <div className="min-h-screen bg-gray-50 px-4 py-10">
+    <div className="min-h-screen bg-muted px-4 py-10">
       <div className="mx-auto max-w-2xl">
-        <Link href="/" className="mb-8 flex items-center gap-2 text-lg font-bold text-[#1a1a1a]">
-          <Home className="size-5 text-[#D4AF37]" />
+        <Link href="/" className="mb-8 flex items-center gap-2 text-lg font-bold text-foreground">
+          <Home className="size-5 text-[#FFD400]" />
           EDIMO
         </Link>
 
-        <div className="rounded-xl border border-gray-200 bg-white p-6 sm:p-8">
-          <h1 className="mb-1 text-2xl font-bold text-[#1a1a1a]">Politique de confidentialité</h1>
+        <div className="rounded-xl border-2 border-border bg-card p-6 sm:p-8">
+          <h1 className="mb-1 text-2xl font-bold text-foreground">Politique de confidentialité</h1>
           <p className="mb-6 text-sm text-muted-foreground">Dernière mise à jour : {new Date().toLocaleDateString('fr-FR')}</p>
 
           <div className="flex flex-col gap-5 text-sm text-muted-foreground">
@@ -82,7 +82,7 @@ export default function PrivacyPage() {
 
         <p className="mt-6 text-center text-sm text-muted-foreground">
           Voir aussi nos{' '}
-          <Link href="/terms" className="font-medium text-[#D4AF37] hover:underline">
+          <Link href="/terms" className="font-medium text-[#FFD400] hover:underline">
             conditions d&apos;utilisation
           </Link>
           .

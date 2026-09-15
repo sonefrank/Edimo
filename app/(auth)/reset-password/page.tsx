@@ -75,7 +75,7 @@ export default function ResetPasswordPage() {
   if (!ready) {
     return (
       <div className="flex justify-center py-8">
-        <Loader2 className="size-6 animate-spin text-[#D4AF37]" />
+        <Loader2 className="size-6 animate-spin text-[#FFD400]" />
       </div>
     )
   }
@@ -83,10 +83,10 @@ export default function ResetPasswordPage() {
   if (success) {
     return (
       <div className="flex flex-col items-center text-center">
-        <div className="mb-4 flex size-14 items-center justify-center rounded-full bg-[#D4AF37]/10">
-          <CheckCircle2 className="size-7 text-[#D4AF37]" />
+        <div className="mb-4 flex size-14 items-center justify-center rounded-full bg-[#FFD400]/10">
+          <CheckCircle2 className="size-7 text-[#FFD400]" />
         </div>
-        <h1 className="mb-2 text-2xl font-bold text-[#1a1a1a]">{t('auth.resetSuccessTitle')}</h1>
+        <h1 className="mb-2 text-2xl font-bold text-foreground">{t('auth.resetSuccessTitle')}</h1>
         <p className="mb-6 text-sm text-muted-foreground">{t('auth.resetSuccessBody')}</p>
         <Button onClick={() => router.push('/home')} className="w-full">
           {t('auth.continue')}
@@ -98,9 +98,9 @@ export default function ResetPasswordPage() {
   if (!validLink) {
     return (
       <div className="text-center">
-        <h1 className="mb-2 text-2xl font-bold text-[#1a1a1a]">{t('auth.invalidLinkTitle')}</h1>
+        <h1 className="mb-2 text-2xl font-bold text-foreground">{t('auth.invalidLinkTitle')}</h1>
         <p className="mb-6 text-sm text-muted-foreground">{t('auth.invalidLinkBody')}</p>
-        <Link href="/forgot-password" className="text-sm font-medium text-[#D4AF37] hover:underline">
+        <Link href="/forgot-password" className="text-sm font-medium text-[#FFD400] hover:underline">
           {t('auth.resetPassword')}
         </Link>
       </div>
@@ -109,7 +109,7 @@ export default function ResetPasswordPage() {
 
   return (
     <div>
-      <h1 className="mb-1 text-2xl font-bold text-[#1a1a1a]">{t('auth.resetTitle')}</h1>
+      <h1 className="mb-1 text-2xl font-bold text-foreground">{t('auth.resetTitle')}</h1>
       <p className="mb-6 text-sm text-muted-foreground">{t('auth.resetSubtitle')}</p>
 
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
