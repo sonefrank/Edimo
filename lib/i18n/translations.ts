@@ -128,6 +128,7 @@ export const translations = {
     },
     property: {
       verified: 'Vérifié',
+      featured: 'En vedette',
       bedrooms: 'ch',
       bedroomsFull: 'chambres',
       bathrooms: 'salles de bain',
@@ -229,6 +230,13 @@ export const translations = {
       backToMyListings: 'Retour à mes annonces',
       notFound: 'Cette annonce est introuvable.',
       notYourListing: 'Vous ne pouvez modifier que vos propres annonces.',
+      boosted: 'En vedette',
+      boostedUntil: "En vedette jusqu'au",
+      boostButton: 'Booster cette annonce',
+      boostRequestSent: "Demande envoyée ! L'administrateur va vous contacter avec les instructions de paiement.",
+      boostRequestMessage:
+        'Bonjour, je souhaite booster mon annonce (1 000 FCFA/7 jours). Merci de me contacter avec les instructions de paiement.',
+      days: 'jours',
       status: {
         disponible: 'Disponible',
         louée: 'Louée',
@@ -519,6 +527,7 @@ export const translations = {
     },
     property: {
       verified: 'Verified',
+      featured: 'Featured',
       bedrooms: 'bd',
       bedroomsFull: 'bedrooms',
       bathrooms: 'bathrooms',
@@ -618,6 +627,13 @@ export const translations = {
       backToMyListings: 'Back to my listings',
       notFound: 'This listing could not be found.',
       notYourListing: 'You can only edit your own listings.',
+      boosted: 'Featured',
+      boostedUntil: 'Featured until',
+      boostButton: 'Boost this listing',
+      boostRequestSent: 'Request sent! The administrator will contact you with payment instructions.',
+      boostRequestMessage:
+        'Hello, I would like to boost my listing (1,000 FCFA/7 days). Please contact me with payment instructions.',
+      days: 'days',
       status: {
         disponible: 'Available',
         louée: 'Rented',

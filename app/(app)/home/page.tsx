@@ -18,6 +18,7 @@ import { PropertyCard } from '@/components/PropertyCard'
 import { useCurrentUser } from '@/components/UserProvider'
 import { useTranslation } from '@/components/LanguageProvider'
 import { supabase } from '@/lib/supabase'
+import { isBoosted } from '@/lib/boost'
 import { PropertyWithOwner, PropertyType } from '@/lib/types'
 import { CITIES, getCity } from '@/lib/cities'
 
@@ -109,6 +110,14 @@ export default function HomePage() {
       return true
     })
   }, [properties, searchQuery, city, propertyType, minBudget, maxBudget, bedrooms, amenities])
+
+  const sortedProperties = useMemo(
+    () =>
+      [...filteredProperties].sort(
+        (a, b) => Number(isBoosted(b.boosted_until)) - Number(isBoosted(a.boosted_until))
+      ),
+    [filteredProperties]
+  )
 
   const selectedCity = city !== 'tous' ? getCity(city) : undefined
   const cityNotCovered = selectedCity ? !selectedCity.active : false
@@ -309,15 +318,15 @@ export default function HomePage() {
             </p>
           )}
 
-          {!loading && !error && filteredProperties.length === 0 && (
+          {!loading && !error && sortedProperties.length === 0 && (
             <div className="border-2 border-dashed border-[#2a1650] p-12 text-center font-body text-lg font-medium text-[#B9A7DE]">
               {t('home.noResults')}
             </div>
           )}
 
-          {!loading && !error && filteredProperties.length > 0 && (
+          {!loading && !error && sortedProperties.length > 0 && (
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {filteredProperties.map((property) => (
+              {sortedProperties.map((property) => (
                 <PropertyCard
                   key={property.id}
                   property={property}

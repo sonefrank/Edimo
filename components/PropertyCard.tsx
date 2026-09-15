@@ -1,8 +1,9 @@
 'use client'
 
 import Link from 'next/link'
-import { MapPin, BedDouble, Ruler, BadgeCheck } from 'lucide-react'
+import { MapPin, BedDouble, Ruler, BadgeCheck, Rocket } from 'lucide-react'
 import { useTranslation } from '@/components/LanguageProvider'
+import { isBoosted } from '@/lib/boost'
 import { Property } from '@/lib/types'
 
 export function PropertyCard({
@@ -13,10 +14,21 @@ export function PropertyCard({
   ownerVerified?: boolean
 }) {
   const { t, locale } = useTranslation()
+  const boosted = isBoosted(property.boosted_until)
 
   return (
     <Link href={`/property/${property.id}`}>
-      <div className="group overflow-hidden border-[3px] border-[#0a0417] bg-[#1F0F3D] arcade-shadow transition-transform hover:-translate-y-1 hover:arcade-shadow">
+      <div
+        className={`group overflow-hidden border-[3px] arcade-shadow transition-transform hover:-translate-y-1 hover:arcade-shadow ${
+          boosted ? 'border-[#FF2E8C] bg-[#1F0F3D]' : 'border-[#0a0417] bg-[#1F0F3D]'
+        }`}
+      >
+        {boosted && (
+          <div className="flex items-center justify-center gap-1.5 border-b-[3px] border-[#0a0417] bg-[#FF2E8C] py-1 font-body text-xs font-bold tracking-wide text-[#0a0417] uppercase">
+            <Rocket className="size-3.5" />
+            {t('property.featured')}
+          </div>
+        )}
         <div className="relative h-48 w-full border-b-[3px] border-[#0a0417] bg-[#2a1650]">
           {property.images?.[0] && (
             // eslint-disable-next-line @next/next/no-img-element

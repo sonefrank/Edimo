@@ -2,12 +2,13 @@
 
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { Loader2, Check, X, Trash2, Users, Home, Star } from 'lucide-react'
+import { Loader2, Check, X, Trash2, Users, Home, Star, Rocket } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs'
 import { Card, CardContent } from '@/components/ui/card'
 import { supabase } from '@/lib/supabase'
+import { isBoosted, BOOST_DURATION_DAYS } from '@/lib/boost'
 import { PROPERTY_TYPE_LABELS, Property, Review, User } from '@/lib/types'
 
 const ADMIN_EMAIL = process.env.NEXT_PUBLIC_ADMIN_EMAIL
@@ -103,6 +104,18 @@ export default function AdminPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ propertyId: id }),
       }).catch(() => {})
+    })
+  }
+
+  function boostProperty(id: string) {
+    withPending(id, async () => {
+      const boostedUntil = new Date(
+        Date.now() + BOOST_DURATION_DAYS * 24 * 60 * 60 * 1000
+      ).toISOString()
+      await supabase.from('properties').update({ boosted_until: boostedUntil }).eq('id', id)
+      setProperties((prev) =>
+        prev.map((p) => (p.id === id ? { ...p, boosted_until: boostedUntil } : p))
+      )
     })
   }
 
@@ -267,6 +280,12 @@ export default function AdminPage() {
                             En attente
                           </Badge>
                         )}
+                        {isBoosted(p.boosted_until) && (
+                          <Badge className="mt-1 ml-1.5 bg-[#FF2E8C]/20 text-[#FF2E8C] border border-[#FF2E8C]/40 hover:bg-[#FF2E8C]/20">
+                            <Rocket className="size-3" /> En vedette jusqu&apos;au{' '}
+                            {new Date(p.boosted_until!).toLocaleDateString('fr-FR')}
+                          </Badge>
+                        )}
                       </div>
                       <div className="flex shrink-0 gap-2">
                         {!p.approved && (
@@ -276,6 +295,16 @@ export default function AdminPage() {
                             disabled={pendingIds.has(p.id)}
                           >
                             <Check className="size-4" /> Valider
+                          </Button>
+                        )}
+                        {p.approved && !isBoosted(p.boosted_until) && (
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            onClick={() => boostProperty(p.id)}
+                            disabled={pendingIds.has(p.id)}
+                          >
+                            <Rocket className="size-4" /> Booster
                           </Button>
                         )}
                         <Button

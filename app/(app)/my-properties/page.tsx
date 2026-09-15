@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import { Loader2, Plus, Trash2, Pencil, RefreshCw } from 'lucide-react'
+import { Loader2, Plus, Trash2, Pencil, RefreshCw, Rocket } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent } from '@/components/ui/card'
@@ -16,6 +16,7 @@ import {
 import { useCurrentUser } from '@/components/UserProvider'
 import { useTranslation } from '@/components/LanguageProvider'
 import { supabase } from '@/lib/supabase'
+import { requestBoost, isBoosted, BOOST_PRICE_FCFA, BOOST_DURATION_DAYS } from '@/lib/boost'
 import { Property } from '@/lib/types'
 
 const STATUS_OPTIONS: Property['status'][] = ['disponible', 'louée', 'maintenance']
@@ -27,6 +28,7 @@ export default function MyPropertiesPage() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   const [pendingIds, setPendingIds] = useState<Set<string>>(new Set())
+  const [boostRequestedIds, setBoostRequestedIds] = useState<Set<string>>(new Set())
 
   useEffect(() => {
     if (userType !== 'propriétaire') {
@@ -95,6 +97,18 @@ export default function MyPropertiesPage() {
     })
   }
 
+  function boostProperty(property: Property) {
+    withPending(property.id, async () => {
+      const { error: requestError } = await requestBoost(
+        userId,
+        `${t('myProperties.boostRequestMessage')}\n« ${property.title} »`
+      )
+      if (!requestError) {
+        setBoostRequestedIds((prev) => new Set(prev).add(property.id))
+      }
+    })
+  }
+
   if (userType !== 'propriétaire') {
     return (
       <div className="mx-auto max-w-lg px-4 py-16 text-center">
@@ -160,11 +174,38 @@ export default function MyPropertiesPage() {
                         {t('property.pendingApproval')}
                       </Badge>
                     )}
+                    {isBoosted(property.boosted_until) && (
+                      <Badge className="shrink-0 bg-[#FF2E8C]/20 text-[#FF2E8C] border border-[#FF2E8C]/40 hover:bg-[#FF2E8C]/20">
+                        <Rocket className="size-3" />
+                        {t('myProperties.boosted')}
+                      </Badge>
+                    )}
                   </div>
                   <p className="truncate text-sm text-muted-foreground">
                     {property.location} ·{' '}
                     {property.price_fcfa.toLocaleString(locale === 'fr' ? 'fr-FR' : 'en-US')} FCFA
                   </p>
+                  {isBoosted(property.boosted_until) ? (
+                    <p className="text-xs text-[#FF2E8C]">
+                      {t('myProperties.boostedUntil')}{' '}
+                      {new Date(property.boosted_until!).toLocaleDateString(locale === 'fr' ? 'fr-FR' : 'en-US')}
+                    </p>
+                  ) : boostRequestedIds.has(property.id) ? (
+                    <p className="text-xs text-[#39FF6A]">{t('myProperties.boostRequestSent')}</p>
+                  ) : (
+                    property.approved && (
+                      <button
+                        type="button"
+                        onClick={() => boostProperty(property)}
+                        disabled={pendingIds.has(property.id)}
+                        className="mt-0.5 flex items-center gap-1 text-xs font-medium text-[#FF2E8C] hover:underline"
+                      >
+                        <Rocket className="size-3" />
+                        {t('myProperties.boostButton')} · {BOOST_PRICE_FCFA.toLocaleString(locale === 'fr' ? 'fr-FR' : 'en-US')} FCFA / {BOOST_DURATION_DAYS}{' '}
+                        {t('myProperties.days')}
+                      </button>
+                    )
+                  )}
                   {property.expires_at && (
                     <p
                       className={`text-xs ${

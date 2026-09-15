@@ -40,6 +40,7 @@ export interface Property {
   approved: boolean
   expires_at?: string
   expiry_notified: boolean
+  boosted_until?: string | null
   created_at: string
 }
 

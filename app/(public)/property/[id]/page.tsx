@@ -85,7 +85,7 @@ export default function PropertyDetailPage() {
         setProperty(data as Property)
 
         const { data: owner } = await supabase
-          .from('profiles')
+          .from('public_profiles')
           .select('full_name, verified')
           .eq('id', data.owner_id)
           .maybeSingle()
@@ -111,7 +111,11 @@ export default function PropertyDetailPage() {
   }, [params.id])
 
   async function toggleFavorite() {
-    if (!userId || !property) return
+    if (!userId) {
+      router.push('/login')
+      return
+    }
+    if (!property) return
     setFavoriteLoading(true)
     try {
       if (isFavorite) {
@@ -132,6 +136,10 @@ export default function PropertyDetailPage() {
 
   function contactOwner() {
     if (!property) return
+    if (!userId) {
+      router.push('/login')
+      return
+    }
     router.push(`/messages/${property.owner_id}?property=${property.id}`)
   }
 

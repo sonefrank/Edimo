@@ -316,3 +316,28 @@ alter table public.profiles add column if not exists verified_until timestamptz;
 create index if not exists profiles_verified_until_idx
   on public.profiles (verified_until)
   where verified_until is not null;
+
+-- ============ ANNONCES PUBLIQUES (consultables sans compte, pour le SEO) ============
+drop policy if exists "Annonces approuvées visibles anonymement" on public.properties;
+create policy "Annonces approuvées visibles anonymement"
+  on public.properties for select to anon
+  using (approved = true);
+
+drop policy if exists "Avis visibles anonymement" on public.reviews;
+create policy "Avis visibles anonymement"
+  on public.reviews for select to anon using (true);
+
+-- Vue restreinte (id, nom, vérifié) pour afficher le propriétaire sur une fiche
+-- annonce publique sans exposer email/téléphone aux visiteurs anonymes.
+create or replace view public.public_profiles as
+select id, full_name, verified
+from public.profiles;
+
+grant select on public.public_profiles to anon, authenticated;
+
+-- ============ ANNONCES BOOSTÉES (mise en avant payante, 1000 FCFA / 7 jours) ============
+alter table public.properties add column if not exists boosted_until timestamptz;
+
+create index if not exists properties_boosted_until_idx
+  on public.properties (boosted_until)
+  where boosted_until is not null;
