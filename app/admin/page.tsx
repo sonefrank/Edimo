@@ -222,7 +222,7 @@ export default function AdminPage() {
                           {u.user_type}
                         </Badge>
                         {u.verified && (
-                          <Badge className="mt-1 ml-1.5 bg-green-100 text-green-700 hover:bg-green-100">
+                          <Badge className="mt-1 ml-1.5 bg-[#39FF6A]/20 text-[#39FF6A] border border-[#39FF6A]/40 hover:bg-[#39FF6A]/20">
                             Vérifié{u.verified_until ? ` · jusqu'au ${new Date(u.verified_until).toLocaleDateString('fr-FR')}` : ''}
                           </Badge>
                         )}
@@ -272,7 +272,7 @@ export default function AdminPage() {
                           {p.status}
                         </Badge>
                         {p.approved ? (
-                          <Badge className="mt-1 ml-1.5 bg-green-100 text-green-700 hover:bg-green-100">
+                          <Badge className="mt-1 ml-1.5 bg-[#39FF6A]/20 text-[#39FF6A] border border-[#39FF6A]/40 hover:bg-[#39FF6A]/20">
                             Approuvée
                           </Badge>
                         ) : (

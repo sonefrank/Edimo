@@ -245,13 +245,13 @@ export function PropertyForm({
 
         <div className="flex flex-col gap-1.5">
           <Label>{t('propertyForm.type')}</Label>
-          <div className="flex gap-2">
+          <div className="grid grid-cols-2 gap-2 sm:flex">
             {(Object.keys(PROPERTY_TYPE_LABELS) as PropertyType[]).map((type) => (
               <button
                 key={type}
                 type="button"
                 onClick={() => setPropertyType(type)}
-                className={`flex-1 rounded-lg border px-4 py-2 text-sm font-medium transition ${
+                className={`rounded-lg border px-2 py-2 text-sm font-medium transition sm:flex-1 sm:px-4 ${
                   propertyType === type
                     ? 'border-[#FFD400] bg-[#FFD400]/10 text-[#FFD400]'
                     : 'border-border text-muted-foreground hover:border-border'

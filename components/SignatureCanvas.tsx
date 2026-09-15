@@ -40,15 +40,15 @@ export function SignatureCanvasInput({
     <div className="rounded-lg border-2 border-dashed border-border bg-card p-4">
       <h3 className="mb-4 font-bold text-foreground">{t('contract.draw.title')}</h3>
 
-      <SignatureCanvas
-        ref={sigCanvas}
-        canvasProps={{
-          width: 500,
-          height: 150,
-          className: 'w-full max-w-full border-2 border-border bg-card cursor-crosshair rounded',
-        }}
-        backgroundColor="white"
-      />
+      <div className="w-full">
+        <SignatureCanvas
+          ref={sigCanvas}
+          canvasProps={{
+            className: 'w-full h-40 border-2 border-border bg-card cursor-crosshair rounded',
+          }}
+          backgroundColor="white"
+        />
+      </div>
 
       {error && <p className="mt-2 text-sm text-destructive">{error}</p>}
 

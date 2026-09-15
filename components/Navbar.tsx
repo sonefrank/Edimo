@@ -7,19 +7,19 @@ import { useTranslation } from '@/components/LanguageProvider'
 import { LanguageToggle } from '@/components/LanguageToggle'
 
 const navIcon =
-  'flex size-9 items-center justify-center border-2 border-[#0a0417] bg-[#2a1650] text-[#B9A7DE] arcade-shadow-sm arcade-press transition-colors hover:bg-[#00E5FF] hover:text-[#0a0417]'
+  'flex size-8 sm:size-9 shrink-0 items-center justify-center border-2 border-[#0a0417] bg-[#2a1650] text-[#B9A7DE] arcade-shadow-sm arcade-press transition-colors hover:bg-[#00E5FF] hover:text-[#0a0417]'
 
 export function Navbar({ unreadCount = 0 }: { unreadCount?: number }) {
   const { userType } = useCurrentUser()
   const { t } = useTranslation()
 
   return (
-    <nav className="sticky top-0 z-50 flex items-center justify-between border-b-4 border-[#FFD400] bg-[#150826] px-4 py-3 sm:px-6">
-      <Link href="/home" className="flex items-center gap-2">
-        <Home className="size-5 text-[#FFD400]" />
-        <span className="font-display text-lg tracking-wide text-[#FFD400] sm:text-xl">EDIMO</span>
+    <nav className="sticky top-0 z-50 flex items-center justify-between gap-2 border-b-4 border-[#FFD400] bg-[#150826] px-3 py-2.5 sm:gap-4 sm:px-6 sm:py-3">
+      <Link href="/home" className="flex shrink-0 items-center gap-1.5 sm:gap-2">
+        <Home className="size-5 shrink-0 text-[#FFD400]" />
+        <span className="font-display text-base tracking-wide text-[#FFD400] sm:text-xl">EDIMO</span>
       </Link>
-      <div className="flex items-center gap-2 sm:gap-3">
+      <div className="flex min-w-0 items-center gap-1.5 overflow-x-auto sm:gap-3">
         {userType === 'propriétaire' && (
           <Link href="/my-properties" className={navIcon} title={t('nav.myProperties')}>
             <Building2 className="size-4" />
@@ -47,7 +47,7 @@ export function Navbar({ unreadCount = 0 }: { unreadCount?: number }) {
         <Link href="/profile" className={navIcon} title={t('nav.profile')}>
           <User className="size-4" />
         </Link>
-        <LanguageToggle />
+        <LanguageToggle className="shrink-0" />
       </div>
     </nav>
   )

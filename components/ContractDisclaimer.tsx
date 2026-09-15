@@ -7,12 +7,12 @@ export function ContractDisclaimer() {
   const { t } = useTranslation()
 
   return (
-    <div className="mb-6 rounded-lg border-l-4 border-[#FFD400] bg-yellow-50 p-4">
-      <p className="mb-1 flex items-center gap-2 text-sm font-bold text-foreground">
-        <AlertTriangle className="size-4 shrink-0 text-[#FFD400]" />
+    <div className="mb-6 border-2 border-[#0a0417] bg-[#FFD400] p-4 arcade-shadow-sm">
+      <p className="mb-1 flex items-center gap-2 font-body text-base font-bold text-[#0a0417]">
+        <AlertTriangle className="size-4 shrink-0 text-[#0a0417]" />
         {t('contract.draftBadge')}
       </p>
-      <p className="text-xs text-foreground">{t('contract.disclaimerBody')}</p>
+      <p className="font-body text-sm font-medium text-[#0a0417]">{t('contract.disclaimerBody')}</p>
     </div>
   )
 }

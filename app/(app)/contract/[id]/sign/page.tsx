@@ -178,7 +178,7 @@ export default function SignContractPage() {
       <ContractDisclaimer />
 
       <div className="overflow-x-auto rounded-xl border-2 border-border bg-muted p-4">
-        <div className="origin-top-left scale-[0.42] sm:scale-[0.6] lg:scale-100">
+        <div className="h-[472px] origin-top-left scale-[0.42] sm:h-[674px] sm:scale-[0.6] lg:h-auto lg:scale-100">
           <ContractPDF ref={pdfRef} data={pdfData} />
         </div>
       </div>

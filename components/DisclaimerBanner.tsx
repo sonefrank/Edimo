@@ -7,9 +7,9 @@ export function DisclaimerBanner() {
   const { t } = useTranslation()
 
   return (
-    <div className="flex gap-3 bg-yellow-50 border-l-4 border-[#FFD400] p-4 mb-4">
-      <AlertTriangle className="size-5 shrink-0 text-[#FFD400]" />
-      <p className="text-sm text-foreground">{t('disclaimer.text')}</p>
+    <div className="mb-4 flex gap-3 border-2 border-[#0a0417] bg-[#FFD400] p-4 arcade-shadow-sm">
+      <AlertTriangle className="size-5 shrink-0 text-[#0a0417]" />
+      <p className="font-body text-base font-semibold text-[#0a0417]">{t('disclaimer.text')}</p>
     </div>
   )
 }
